@@ -57,6 +57,47 @@ copy_superpowers_skills() {
   done < <(find "$source_root" -mindepth 2 -maxdepth 2 -type f -name SKILL.md -print | sort)
 }
 
+write_bundle_skills() {
+  cat > "$ROOT_DIR/skills/mattpocock-skills/SKILL.md" <<'EOF'
+---
+name: mattpocock-skills
+description: Engineering and productivity workflows from Matt Pocock's public skills repository. Use when the user asks to implement, test, review, prototype, research, specify, triage, teach, hand off, or improve software work and agent workflows.
+---
+
+# Matt Pocock Skills Collection
+
+Use this as a navigation skill for the bundled Matt Pocock workflows. Read the matching child `SKILL.md` before executing the requested workflow.
+
+Engineering workflows are under `engineering/`; productivity workflows are under `productivity/`. Prefer the narrowest matching child skill. Do not assume this collection replaces project-specific instructions, safety requirements, or the user's explicit request.
+EOF
+
+  cat > "$ROOT_DIR/skills/aws/SKILL.md" <<'EOF'
+---
+name: aws-skills
+description: AWS architecture, serverless, database, deployment, modernization, Amazon Location, SageMaker, and API implementation workflows from the AWS Labs agent plugins repository. Use for AWS infrastructure, Lambda, API Gateway, Step Functions, DSQL, Amplify, deployment, architecture diagrams, SageMaker, or AWS modernization tasks.
+---
+
+# AWS Agent Plugins Collection
+
+Use this as a navigation skill for the bundled AWS workflows. Read the matching child `SKILL.md` before executing the requested AWS task.
+
+The collection is grouped by upstream plugin under the child directories. Use the narrowest matching skill and verify current AWS documentation for version-sensitive behavior. Do not infer credentials or perform destructive AWS operations without the user's explicit authorization.
+EOF
+
+  cat > "$ROOT_DIR/skills/superpowers/SKILL.md" <<'EOF'
+---
+name: superpowers
+description: A disciplined software-development workflow collection from obra/superpowers. Use before creative coding work, requirements analysis, implementation plans, test-driven development, debugging, code review, Git worktrees, or completion verification.
+---
+
+# Superpowers Workflow Collection
+
+Use this as a navigation skill for the bundled Superpowers workflows. Read the matching child `SKILL.md` before executing the requested workflow.
+
+Follow the relevant workflow in sequence. Preserve the user's explicit requirements, keep changes focused, test before claiming completion, and verify results before delivery.
+EOF
+}
+
 write_import_metadata() {
   local metadata_file="$ROOT_DIR/metadata/skill-imports.tsv"
   printf 'namespace\tskill_name\tgithub_skill_url\tupstream_repository\n' > "$metadata_file"
@@ -85,6 +126,14 @@ write_import_metadata() {
   done < <(find "$WORK_DIR/superpowers/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md -print | sort)
 }
 
+write_manus_bundle_metadata() {
+  local metadata_file="$ROOT_DIR/metadata/manus-imports.tsv"
+  printf 'bundle_name\tmanus_github_import_url\tupstream_repository\n' > "$metadata_file"
+  printf 'mattpocock-skills\thttps://github.com/rellikhsu/manus-skills/tree/main/skills/mattpocock-skills\thttps://github.com/mattpocock/skills\n' >> "$metadata_file"
+  printf 'aws-skills\thttps://github.com/rellikhsu/manus-skills/tree/main/skills/aws\thttps://github.com/awslabs/agent-plugins\n' >> "$metadata_file"
+  printf 'superpowers\thttps://github.com/rellikhsu/manus-skills/tree/main/skills/superpowers\thttps://github.com/obra/superpowers\n' >> "$metadata_file"
+}
+
 clone_source "$MATT_REPO" matt
 clone_source "$AWS_REPO" aws
 clone_source "$SUPERPOWERS_REPO" superpowers
@@ -92,6 +141,7 @@ clone_source "$SUPERPOWERS_REPO" superpowers
 copy_matt_skills
 copy_aws_skills
 copy_superpowers_skills
+write_bundle_skills
 
 updated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 cat > "$ROOT_DIR/metadata/source-commits.json" <<EOF
@@ -115,6 +165,7 @@ cat > "$ROOT_DIR/metadata/source-commits.json" <<EOF
 EOF
 
 write_import_metadata
+write_manus_bundle_metadata
 
 printf 'Synced skills: %s\n' "$(find "$ROOT_DIR/skills" -type f -name SKILL.md | wc -l | tr -d ' ')"
 printf 'Source metadata: %s\n' "$ROOT_DIR/metadata/source-commits.json"
