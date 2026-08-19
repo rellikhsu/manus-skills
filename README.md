@@ -1,6 +1,6 @@
 # Manus Skills Mirror
 
-This repository is a public, generated mirror of skills from three upstream repositories. It is structured so that every skill directory contains its own `SKILL.md` and can be imported into Manus through a GitHub subdirectory URL.
+This repository is a private, generated mirror of skills from three upstream repositories. It is structured so that every skill directory contains its own `SKILL.md` and can be imported into Manus through a GitHub subdirectory URL.
 
 ## Upstream sources
 
@@ -10,7 +10,7 @@ This repository is a public, generated mirror of skills from three upstream repo
 | `aws` | https://github.com/awslabs/agent-plugins | `skills/aws/<skill-name>` |
 | `superpowers` | https://github.com/obra/superpowers | `skills/superpowers/<skill-name>` |
 
-The mirrored content comes from public upstream repositories. Do not commit credentials, tokens, private project files, or unrelated personal data to this repository.
+The mirrored content comes from public upstream repositories and is kept private for the user's Manus synchronization workflow. Do not commit credentials, tokens, private project files, or unrelated personal data to this repository.
 
 ## Manus import URL
 
