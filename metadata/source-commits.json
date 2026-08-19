@@ -1,0 +1,17 @@
+{
+  "updated_at": "2026-08-19T05:54:10Z",
+  "sources": {
+    "mattpocock/skills": {
+      "repository": "https://github.com/mattpocock/skills.git",
+      "commit": "9c9f36ccd3995266cd675468af71639c8dde1ec5"
+    },
+    "awslabs/agent-plugins": {
+      "repository": "https://github.com/awslabs/agent-plugins.git",
+      "commit": "bab56a3b9991aa0c6857b05198a61ba14a60bce4"
+    },
+    "obra/superpowers": {
+      "repository": "https://github.com/obra/superpowers.git",
+      "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"
+    }
+  }
+}
