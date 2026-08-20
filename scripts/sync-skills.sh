@@ -11,7 +11,16 @@ mkdir -p "$ROOT_DIR/skills" "$ROOT_DIR/metadata"
 clone_source() {
   local url="$1"
   local name="$2"
-  git clone --depth 1 --quiet "$url" "$WORK_DIR/$name"
+  
+  if [[ "$url" == *"harness-engineering"* ]]; then
+    if [ -z "${GH_PAT:-}" ]; then
+      echo "ERROR: GH_PAT is required to clone private repository harness-engineering" >&2
+      exit 1
+    fi
+    git -c http.extraheader="AUTHORIZATION: basic $(printf "x-access-token:%s" "$GH_PAT" | base64 -w 0)" clone --depth 1 --quiet "$url" "$WORK_DIR/$name"
+  else
+    git clone --depth 1 --quiet "$url" "$WORK_DIR/$name"
+  fi
 }
 reset_namespace() {
   local namespace="$1"
@@ -63,7 +72,7 @@ description: Engineering and productivity workflows from Matt Pocock's public sk
 ---
 # Matt Pocock Skills Collection
 Use this as a navigation skill for the bundled Matt Pocock workflows. Read the matching child `SKILL.md` before executing the requested workflow.
-Engineering workflows are under `engineering/`; productivity workflows are under `productivity/`. Prefer the narrowest matching child skill. Do not assume this collection replaces project-specific instructions, safety requirements, or the user's explicit request.
+Prefer the narrowest matching child skill. Do not assume this collection replaces project-specific instructions, safety requirements, or the user's explicit request.
 EOF
   cat > "$ROOT_DIR/skills/aws/SKILL.md" <<'EOF'
 ---
@@ -82,6 +91,19 @@ description: A disciplined software-development workflow collection from obra/su
 # Superpowers Workflow Collection
 Use this as a navigation skill for the bundled Superpowers workflows. Read the matching child `SKILL.md` before executing the requested workflow.
 Follow the relevant workflow in sequence. Preserve the user's explicit requirements, keep changes focused, test before claiming completion, and verify results before delivery.
+EOF
+
+  cat > "$ROOT_DIR/skills/harness-engineering/SKILL.md" <<'EOF'
+---
+name: harness-engineering
+description: Local-first practices for making coding agents reliable on long or autonomous tasks. Includes repo-map-audit, invariant-linter, execution-plan, generator-evaluator, and 6 other core loops.
+---
+
+# Harness Engineering Collection
+
+Use this as a navigation skill for the bundled harness-engineering workflows. Read the matching child `SKILL.md` before executing the requested workflow.
+
+These skills establish ground-layer constraints for agent execution. Always use `which-loop` to determine the appropriate workflow for the current task context.
 EOF
 }
 write_import_metadata() {

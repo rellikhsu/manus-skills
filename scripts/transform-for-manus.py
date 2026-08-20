@@ -16,11 +16,11 @@ def transform_skill_file(file_path: Path, namespace: str):
     name_match = name_pattern.search(frontmatter)
     if not name_match:
         return
-    raw_name = name_match.group(1).strip().strip("\"'")
+    raw_name = name_match.group(1).strip().strip(chr(39) + chr(34))
     prefix = f"{namespace}:"
     if not raw_name.startswith(prefix):
         new_name = f"{prefix}{raw_name}"
-        new_frontmatter = name_pattern.sub(f"name: {new_name}", frontmatter, count=1)
+        new_frontmatter = name_pattern.sub(f'name: "{new_name}"', frontmatter, count=1)
         new_content = content[:match.start(1)] + new_frontmatter + content[match.end(1):]
         file_path.write_text(new_content, encoding="utf-8")
         print(f"Prefixed: [{file_path.relative_to(ROOT_DIR)}] -> '{new_name}'")

@@ -17,8 +17,11 @@ jobs:
       - name: Check out mirror
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
       - name: Sync upstream skills (main)
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           chmod +x ./scripts/sync-skills.sh
           ./scripts/sync-skills.sh
@@ -54,8 +57,15 @@ jobs:
           set -Eeuo pipefail
           git checkout -B dist
           python3 scripts/transform-for-manus.py
-          git add skills
+          git add -A skills metadata
           if ! git diff --cached --quiet; then
             git commit -m "chore: transform skills for manus dist [skip ci]"
+          fi
+          # Secondary verification before force push
+          echo "Verifying dist branch..."
+          test "$(find skills -mindepth 3 -maxdepth 4 -type f -name SKILL.md | wc -l)" -gt 0
+          if find skills -mindepth 3 -maxdepth 4 -type f -name SKILL.md -exec grep -H "^name:" {} + | grep -vE 'name:\s*"?[a-zA-Z0-9_-]+:[^"]+"?'; then
+            echo "ERROR: Found un-prefixed or malformed names in child skills." >&2
+            exit 1
           fi
           git push origin dist --force
