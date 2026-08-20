@@ -1,32 +1,27 @@
 name: Sync upstream skills
-
 on:
   schedule:
     # 00:00 UTC Monday = 08:00 Asia/Taipei Monday.
     - cron: "0 0 * * 1"
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: sync-upstream-skills
   cancel-in-progress: false
-
 jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
       - name: Check out mirror
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Sync upstream skills
-        run: ./scripts/sync-skills.sh
-
+      - name: Sync upstream skills (main)
+        run: |
+          chmod +x ./scripts/sync-skills.sh
+          ./scripts/sync-skills.sh
       - name: Validate generated mirror
         shell: bash
         run: |
@@ -40,17 +35,27 @@ jobs:
             test -n "$skill_url"
             test -n "$upstream_url"
           done < <(tail -n +2 metadata/skill-imports.tsv)
-
-      - name: Commit changed mirror content
+      - name: Commit clean mirror to main
         shell: bash
         run: |
           set -Eeuo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md .github/workflows/sync-upstream-skills.yml scripts metadata skills
-          if git diff --cached --quiet; then
-            echo "No upstream changes detected."
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: sync upstream skills [clean mirror]"
+            git push origin main
+          else
+            echo "No upstream changes detected on main."
           fi
-          git commit -m "chore: sync upstream skills"
-          git push
+      - name: Transform and push to dist branch
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          git checkout -B dist
+          python3 scripts/transform-for-manus.py
+          git add skills
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: transform skills for manus dist [skip ci]"
+          fi
+          git push origin dist --force
