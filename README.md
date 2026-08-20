@@ -9,6 +9,7 @@ This repository is a private, generated mirror of skills from three upstream rep
 | `mattpocock-skills` | https://github.com/mattpocock/skills | `skills/mattpocock-skills/<skill-name>` |
 | `aws` | https://github.com/awslabs/agent-plugins | `skills/aws/<skill-name>` |
 | `superpowers` | https://github.com/obra/superpowers | `skills/superpowers/<skill-name>` |
+| `harness-engineering` | https://github.com/rellikhsu/harness-engineering | `skills/harness-engineering/<skill-name>` |
 
 The mirrored content comes from public upstream repositories and is kept private for the user's Manus synchronization workflow. Do not commit credentials, tokens, private project files, or unrelated personal data to this repository.
 
@@ -26,6 +27,7 @@ For example:
 https://github.com/rellikhsu/manus-skills/tree/main/skills/mattpocock-skills/tdd
 https://github.com/rellikhsu/manus-skills/tree/main/skills/aws/dsql
 https://github.com/rellikhsu/manus-skills/tree/main/skills/superpowers/brainstorming
+https://github.com/rellikhsu/manus-skills/tree/main/skills/harness-engineering/which-loop
 ```
 
 ## Updates

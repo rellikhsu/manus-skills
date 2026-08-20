@@ -1,0 +1,148 @@
+---
+name: "harness-engineering:governance-baseline"
+description: Audit what an autonomous coding agent can do unchecked in this project — merge, deploy, spend, touch secrets, run destructive commands — then add the smallest permission boundary, audit trail, or human-approval gate that closes the highest-risk gap. Use when an agent is being given broader autonomy (auto-merge, autonomous PR loops, production access, credentials, unattended scheduled runs), when the user asks to "lock down" or "add guardrails" to agent actions, when reviewing what an agent is allowed to do unsupervised, or when an incident review shows an agent took an action nobody explicitly authorized.
+description-short: Audit what an autonomous coding agent can do unchecked (merge, deploy, spend, touch secrets), then add the smallest permission boundary or approval gate that closes the highest-risk gap.
+---
+
+# Governance Baseline
+
+An agent's authority is capped by what stops it, not by how well it reasons. Anything
+it can do without a mechanical check or a human gate, it eventually will do — not out
+of malice, just because nothing said no. This skill finds the one unchecked capability
+with the worst plausible blast radius and closes it.
+
+Scope discipline: you are not building a permission framework, an RBAC system, or a
+policy DSL. You are converting one "the agent could do this and nobody would notice
+until it mattered" gap into one governed action.
+
+## Step 1 — Inventory unchecked authority
+
+Fill in this table from evidence — actual tool access, actual CI/CD permissions,
+actual credentials the agent's environment can reach — not assumption.
+
+| Capability | Can the agent do this today with no mechanical check or human approval? | Blast radius if wrong |
+|---|---|---|
+| Shell / file writes outside the repo | | |
+| Network calls to arbitrary hosts | | |
+| Secrets / credentials in scope (env, vault, `.env`) | | |
+| Merge / push / deploy | | |
+| Destructive commands (`rm -rf`, `DROP TABLE`, force-push, `reset --hard`) | | |
+| Spend (API cost, cloud resources, third-party billing) | | |
+| Unattended/scheduled runs (cron or host scheduler) with no session cap | | |
+
+Concrete checks to run:
+- Read CI/CD config and branch protection — does anything actually block an agent-
+  authored push to `main`, or is it convention only?
+- `grep -rn` for how secrets reach the agent's environment — injected as env vars the
+  model can see, or fetched at execution time and never exposed to context?
+- Check whether the agent's shell/tool access is scoped (sandboxed, allow-listed) or
+  effectively unrestricted.
+- If the agent runs on a schedule (host scheduler or cron agent), check whether it has a
+  session/spend cap or can run indefinitely.
+
+## Step 2 — Rank by (likelihood × blast radius), pick ONE
+
+Match the response to what the project actually exposes. Do **not** default to the
+heavy version.
+
+| Situation | Response |
+|---|---|
+| Local dev only, no prod access, no secrets in scope | Likely nothing needed. Say so and stop. |
+| Agent can merge or deploy | Gate destructive/irreversible actions specifically; leave everything else alone. |
+| Agent's environment can reach secrets/credentials | Vault + placeholder pattern — the agent invokes named actions, never sees raw values. |
+| Agent runs unattended (cron or host scheduler) | Session/spend cap plus a structured audit trail — the two questions unattended runs raise are "how far could this go" and "what did it actually do". |
+| Numerous, evolving rules that prose can't track | Only then, a declarative policy file (YAML) — see Step 3. |
+
+State the gap in one sentence: *"Right now, nothing stops the agent from doing X."*
+
+## Step 3 — Propose the smallest mechanism
+
+In ascending order of cost — stop at the first one that actually closes the gap:
+
+1. **Static permission boundary.** An allow-list of paths/commands/network hosts, or a
+   sandboxed execution environment with restricted filesystem/network access. Easy to
+   inspect, cannot express task-specific intent — fine for most projects.
+2. **Human-in-the-loop hook on a specific action class.** Not "approve everything" —
+   name the class (destructive commands, spend over $X, prod deploy, anything touching
+   auth/payments/migrations) and gate only that. Frequent, low-stakes approval prompts
+   train reflexive clicking, not scrutiny — a mobile-permissions study found only 17%
+   of users even read the prompt and 3% could answer comprehension questions about
+   what they'd granted. Gate rarely, on real stakes.
+3. **Structured audit trail.** One JSONL line per governed action: what tool, what
+   args, what risk class, what result. This is `observability-bridge`'s territory if
+   the project doesn't have queryable logs yet — chain to it rather than duplicating.
+   A log is not a gate: it tells you what happened, not whether it should have.
+4. **Declarative policy file (YAML).** Only once rules are numerous or change often
+   enough that prose in `CLAUDE.md` can't stay accurate. Non-developer stakeholders
+   (security, compliance) can review and diff a YAML file; they can't safely review
+   scattered prose. Keep it small — pipeline mode, allowed/denied tool patterns, a
+   token/spend budget, an audit destination. Do not invent a policy DSL from scratch.
+
+Present as:
+
+> **Gap:** the agent can force-push and nothing blocks it.
+> **Mechanism:** branch protection on `main` (already native to the host, zero new code) plus a pre-push hook that refuses `--force` outside a named escape hatch.
+> **Then true:** a force-push requires an explicit, greppable exception — not silent capability.
+
+Get approval before implementing — this changes what the agent (and possibly the
+human) can do; do not land it unannounced.
+
+## Step 4 — Implement, then prove the gate holds
+
+Implement only what was approved. Then, in the same session, actually trigger the
+gated action and show it being blocked or escalated — not described, demonstrated.
+An unproven gate is not a gate.
+
+Record the new boundary where the agent will see it next time: a line in `CLAUDE.md`
+("destructive shell commands require `--confirm`; force-push is blocked outside
+`scripts/rebase-recovery.sh`"). An undocumented gate just looks like a bug the next
+session works around.
+
+If the gate should be **mechanically enforced** rather than agent-remembered prose,
+hand off to `invariant-linter` — governance decides *what* must be gated;
+invariant-linter turns *that* into a check nothing can silently violate.
+
+## Worked example
+
+**Project:** a repo runs `doc-gardener` on a daily scheduled job with commit access.
+No one asked "what's the worst this could do unattended."
+
+**Audit:** the cron agent can commit and open PRs; nothing caps how many commits per
+run or blocks it from touching `.github/workflows/`. Doc-gardener's own skill text
+already says "never edit CI config" and "cap the whole run at 3 commits" — but that's
+prose inside the skill, not an enforced boundary in the repo.
+
+**Highest-leverage gap:** an unattended run with a bug in its own logic could commit
+far more than intended before anyone notices, or touch CI config despite the skill
+saying not to.
+
+**Mechanism (about 20 minutes):**
+1. A `pre-commit` check that hard-fails any commit touching `.github/workflows/**`
+   from the gardening branch pattern (`gardening/*`) — makes the "never touch CI"
+   rule unbypassable rather than trusted to the model reading it correctly every time.
+2. A wrapper script `scripts/gardening-run.sh` that counts commits made in the current
+   invocation and exits non-zero past 3, so the cap is enforced by the shell, not the
+   model's arithmetic.
+3. JSONL audit line per commit (`{"run": "...", "commit": "...", "files": N, "rule": "GP-1"}`)
+   appended to `.gardening-audit.log` — closes the "what did it actually do overnight"
+   question without standing up a platform.
+
+**Proven live:** ran the wrapper against a scripted 4th commit — script exited 1 with
+`gardening cap reached (3/3)`, no commit made. Attempted a workflow-file edit on a
+`gardening/*` branch — pre-commit rejected it with the rule name.
+
+**Recorded in `CLAUDE.md`:** the commit cap, the CI-file block, and the audit log
+location.
+
+## Anti-patterns
+
+- Building RBAC, a policy DSL, or a permissions framework for a project with no prod
+  access and no secrets in scope.
+- Gating everything, so approval prompts become routine and stop getting read.
+- A rule that lives only as prose in `CLAUDE.md` with no mechanical backing — that is
+  a preference, not a governed boundary; hand it to `invariant-linter` if it should be
+  more than a suggestion.
+- Treating a log as a gate. Audit trails answer "what happened"; they do not stop
+  anything on their own.
+- Standing up a full audit platform when one JSONL file and `jq` answers every
+  question anyone actually has.
