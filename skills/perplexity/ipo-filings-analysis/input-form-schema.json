@@ -1,0 +1,205 @@
+{
+  "submit_label": "Run IPO filings analysis",
+  "query_template": "Run the IPO Filings Analysis workflow. Company: {{company}} Filing reference (EDGAR link, CIK, or accession number): {{filing_reference}} Uploaded filing documents: see the files attached to this turn Pricing status: {{pricing_status}} Analysis sections to emphasize: {{analysis_sections}} Comparable peers: {{comparable_peers}} Additional context: {{additional_context}} Preferred data source: {{data_source}} Output format: {{output_format}}",
+  "pages": [
+    {
+      "title": "IPO filing inputs",
+      "description": "Point the workflow at an S-1/F-1 issuer. It retrieves the registration statement and every amendment from SEC EDGAR, tracks what changed across amendments, and produces an investor-grade deal read with dilution math, valuation across the marketed range, and diligence questions.",
+      "fields": [
+        {
+          "key": "company",
+          "type": "text",
+          "label": "Company",
+          "required": true,
+          "placeholder": "e.g., Stripe; Databricks; CoreWeave (CRWV)",
+          "description": "Issuer name, with reserved ticker if known. The workflow locates the registration statement on SEC EDGAR."
+        },
+        {
+          "key": "filing_reference",
+          "type": "text",
+          "label": "Filing reference",
+          "required": false,
+          "placeholder": "e.g., EDGAR filing URL, CIK 0001543151, or accession no. 0001193125-26-012345",
+          "description": "Optional pointer to the exact registration statement if the company name alone is ambiguous."
+        },
+        {
+          "key": "filing_documents",
+          "type": "file",
+          "label": "Upload filing documents",
+          "required": false,
+          "accept": ".pdf,.htm,.html,.docx,.txt,.zip",
+          "max_size_mb": 200,
+          "accept_description": "Optional: the prospectus, amendments, roadshow deck, or analyst pack. EDGAR is still used for the filing history."
+        },
+        {
+          "key": "pricing_status",
+          "type": "select",
+          "label": "Deal stage",
+          "required": false,
+          "default": "Auto-detect from EDGAR (recommended)",
+          "description": "Controls the valuation anchor. Auto-detect reads the EDGAR filing history to determine whether a range or final price exists.",
+          "options": [
+            {
+              "value": "Auto-detect from EDGAR (recommended)",
+              "label": "Auto-detect from EDGAR (recommended)"
+            },
+            {
+              "value": "Pre-range (no price range filed yet)",
+              "label": "Pre-range (no price range filed yet)"
+            },
+            {
+              "value": "Range set (marketing at a filed price range)",
+              "label": "Range set (marketing at a filed price range)"
+            },
+            {
+              "value": "Priced (final prospectus 424B filed)",
+              "label": "Priced (final prospectus 424B filed)"
+            }
+          ]
+        },
+        {
+          "key": "analysis_sections",
+          "type": "multi_select",
+          "label": "Sections to emphasize",
+          "required": false,
+          "description": "All sections run by default; selections receive extra depth.",
+          "options": [
+            {
+              "value": "Amendment-by-amendment change log",
+              "label": "Amendment-by-amendment change log",
+              "description": "Price range moves, share count changes, new risk factors, restated figures across S-1/A filings"
+            },
+            {
+              "value": "Offering terms and structure",
+              "label": "Offering terms and structure",
+              "description": "Primary vs. secondary split, greenshoe, lockup expiry schedule, dual-class and governance"
+            },
+            {
+              "value": "Dilution and share count build",
+              "label": "Dilution and share count build",
+              "description": "Options and RSU overhang, converts, IPO-triggered vesting, fully diluted post-money share count"
+            },
+            {
+              "value": "Growth quality",
+              "label": "Growth quality",
+              "description": "Cohorts, NRR definitions, concentration, marketing-adjusted vs. reported trends"
+            },
+            {
+              "value": "Accounting read-through",
+              "label": "Accounting read-through",
+              "description": "Revenue recognition choices, non-GAAP bridge quality, SBC, capitalized costs, auditor flags"
+            },
+            {
+              "value": "Risk factors and use of proceeds",
+              "label": "Risk factors and use of proceeds",
+              "description": "Informative vs. boilerplate risks; where the money actually goes"
+            },
+            {
+              "value": "Valuation vs. comps",
+              "label": "Valuation vs. comps",
+              "description": "Implied multiples at low/mid/high of range on fully diluted post-money shares"
+            },
+            {
+              "value": "Diligence questions",
+              "label": "Diligence questions",
+              "description": "Prioritized question list tied to filing citations"
+            }
+          ]
+        },
+        {
+          "key": "comparable_peers",
+          "type": "textarea",
+          "label": "Comparable peers",
+          "required": false,
+          "placeholder": "e.g., SNOW, MDB, DDOG; or leave blank for auto-selection",
+          "description": "Public comps for the valuation grid. If blank, the workflow selects 5-10 peers and flags them for your review."
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., We are anchoring on the lockup supply schedule and SBC run-rate; compare the range to the 2024 Series G price per share."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "PitchBook",
+            "FactSet",
+            "Daloopa",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

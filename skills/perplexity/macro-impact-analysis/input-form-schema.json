@@ -1,0 +1,187 @@
+{
+  "submit_label": "Run macro impact analysis",
+  "query_template": "Run a macro impact analysis on {{ticker}}. Holdings file: see the files attached to this turn. Macro focus areas: {{macro_focus}}. Lookback window: {{lookback}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. {{additional_context}}",
+  "pages": [
+    {
+      "title": "What company or portfolio do you want to stress?",
+      "description": "Quantify how macro and geopolitical forces transmit into a specific company's or portfolio's P&L and valuation",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Company ticker (or tickers for a portfolio)",
+          "required": true,
+          "placeholder": "e.g., CAT \u2014 or AAPL, TSM, ASML for a portfolio"
+        },
+        {
+          "key": "holdings_file",
+          "type": "file",
+          "label": "Holdings file (portfolio mode)",
+          "required": false,
+          "accept": ".csv,.xlsx,.xls,.pdf",
+          "max_size_mb": 20,
+          "accept_description": "Positions export with symbols and weights; used instead of the ticker list for portfolio analysis"
+        },
+        {
+          "key": "macro_focus",
+          "type": "multi_select",
+          "label": "Macro & geopolitical focus areas",
+          "required": false,
+          "description": "Leave blank to let the evidence rank all channels; selected areas are always addressed, even if immaterial.",
+          "options": [
+            {
+              "value": "Rates & central banks",
+              "label": "Rates & central banks",
+              "icon": "trending-up"
+            },
+            {
+              "value": "Inflation & input costs",
+              "label": "Inflation & input costs",
+              "icon": "calculator"
+            },
+            {
+              "value": "FX & the dollar",
+              "label": "FX & the dollar",
+              "icon": "world"
+            },
+            {
+              "value": "Commodities & energy",
+              "label": "Commodities & energy",
+              "icon": "chart-line"
+            },
+            {
+              "value": "Tariffs & trade policy",
+              "label": "Tariffs & trade policy",
+              "icon": "scale"
+            },
+            {
+              "value": "Geopolitics, sanctions & conflicts",
+              "label": "Geopolitics, sanctions & conflicts",
+              "icon": "world"
+            },
+            {
+              "value": "Elections & regulatory regimes",
+              "label": "Elections & regulatory regimes",
+              "icon": "building-2"
+            },
+            {
+              "value": "Consumer & business cycle",
+              "label": "Consumer & business cycle",
+              "icon": "users"
+            },
+            {
+              "value": "Credit conditions & spreads",
+              "label": "Credit conditions & spreads",
+              "icon": "git-compare"
+            }
+          ]
+        },
+        {
+          "key": "lookback",
+          "type": "select",
+          "label": "Historical lookback window",
+          "required": true,
+          "default": "10 years",
+          "options": [
+            {
+              "value": "5 years",
+              "label": "5 years"
+            },
+            {
+              "value": "10 years",
+              "label": "10 years"
+            },
+            {
+              "value": "15 years",
+              "label": "15 years"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., I think tariff risk is underpriced \u2014 test it. Or: focus on EUR/USD and European demand; we hedge 70% of FX."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Daloopa",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

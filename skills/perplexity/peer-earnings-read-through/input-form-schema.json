@@ -1,0 +1,119 @@
+{
+  "submit_label": "Run read-through",
+  "query_template": "Run a peer earnings read-through for target company {{target_company}}. Peer basket: {{peer_companies}}. Focus areas: {{focus_areas}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}. Follow the peer earnings read-through framework in the system instructions.",
+  "pages": [
+    {
+      "title": "Read-through setup",
+      "description": "Identify the target company and optionally the peers whose earnings should be read through.",
+      "fields": [
+        {
+          "key": "target_company",
+          "type": "text",
+          "label": "Target company",
+          "required": true,
+          "placeholder": "e.g., AMD, LULU, CAT"
+        },
+        {
+          "key": "peer_companies",
+          "type": "textarea",
+          "label": "Peer basket (optional)",
+          "required": false,
+          "placeholder": "e.g., NVDA, INTC, TSM, MU \u2014 leave blank to auto-construct from competitors, suppliers, customers, and channel partners",
+          "description": "Leave blank to have the basket built automatically with rationale for each peer."
+        },
+        {
+          "key": "focus_areas",
+          "type": "textarea",
+          "label": "Focus areas",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., datacenter demand, China pricing, channel inventory"
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Daloopa",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., current debate, position context, time horizon"
+        }
+      ]
+    }
+  ]
+}

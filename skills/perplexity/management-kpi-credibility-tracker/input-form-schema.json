@@ -1,0 +1,156 @@
+{
+  "submit_label": "Track credibility",
+  "query_template": "Run a management KPI and credibility tracker on {{ticker}}. Lookback window: {{lookback}}. Commitment scope: {{commitment_scope}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. {{additional_context}}",
+  "pages": [
+    {
+      "title": "Whose commitments do you want to track?",
+      "description": "Score management guidance, KPI targets, and milestones against actual outcomes",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Stock ticker",
+          "required": true,
+          "placeholder": "e.g., TSLA, SNOW, BA"
+        },
+        {
+          "key": "lookback",
+          "type": "select",
+          "label": "Lookback window",
+          "required": true,
+          "default": "Last 8 quarters",
+          "options": [
+            {
+              "value": "Last 4 quarters",
+              "label": "Last 4 quarters"
+            },
+            {
+              "value": "Last 8 quarters",
+              "label": "Last 8 quarters"
+            },
+            {
+              "value": "Last 12 quarters",
+              "label": "Last 12 quarters"
+            },
+            {
+              "value": "Last 16 quarters",
+              "label": "Last 16 quarters"
+            }
+          ]
+        },
+        {
+          "key": "commitment_scope",
+          "type": "multi_select",
+          "label": "Commitment types to track",
+          "required": false,
+          "description": "Leave empty to track all commitment types.",
+          "options": [
+            {
+              "value": "Financial guidance (revenue, EPS, margins, FCF)",
+              "label": "Financial guidance (revenue, EPS, margins, FCF)",
+              "icon": "trending-up"
+            },
+            {
+              "value": "Operating KPI targets (users, units, NRR, ARPU)",
+              "label": "Operating KPI targets (users, units, NRR, ARPU)",
+              "icon": "chart-line"
+            },
+            {
+              "value": "Milestones (launches, approvals, capacity)",
+              "label": "Milestones (launches, approvals, capacity)",
+              "icon": "list-checks"
+            },
+            {
+              "value": "Capital allocation (buybacks, dividends, deleveraging)",
+              "label": "Capital allocation (buybacks, dividends, deleveraging)",
+              "icon": "calculator"
+            },
+            {
+              "value": "Long-term / investor-day targets",
+              "label": "Long-term / investor-day targets",
+              "icon": "target"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., Focus on the FSD timeline commitments. Or: management changed CFOs in 2024 \u2014 split the scorecard pre/post."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "Daloopa",
+            "FactSet",
+            "Carbon Arc (alt data)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "XLSX",
+          "options": [
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "submit_label": "Build comps",
+  "query_template": "Build a trading comps table for {{companies}}. Data source: {{data_source}}. Include metrics: {{metrics}}. Output format: {{output_format}}. Additional context: {{context}}",
+  "pages": [
+    {
+      "title": "Comps setup",
+      "fields": [
+        {
+          "key": "companies",
+          "type": "textarea",
+          "label": "Companies",
+          "required": true,
+          "placeholder": "e.g., Snowflake, Databricks, Palantir, MongoDB or just 'Snowflake' for auto peer selection"
+        },
+        {
+          "key": "data_source",
+          "type": "select",
+          "label": "Preferred data source",
+          "required": true,
+          "description": "Select the authoritative source for all figures and data pulls.",
+          "default": "Perplexity Finance",
+          "options": [
+            {
+              "value": "Perplexity Finance",
+              "label": "Perplexity Finance"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook"
+            }
+          ]
+        },
+        {
+          "key": "metrics",
+          "type": "multi_select",
+          "label": "Metrics to include",
+          "required": false,
+          "options": [
+            {
+              "value": "EV/Revenue",
+              "label": "EV/Revenue"
+            },
+            {
+              "value": "EV/EBITDA",
+              "label": "EV/EBITDA"
+            },
+            {
+              "value": "P/E",
+              "label": "P/E"
+            },
+            {
+              "value": "Revenue growth",
+              "label": "Revenue growth"
+            },
+            {
+              "value": "Margins (Gross, EBITDA, Net)",
+              "label": "Margins (Gross, EBITDA, Net)"
+            },
+            {
+              "value": "FCF yield",
+              "label": "FCF yield"
+            },
+            {
+              "value": "Rule of 40",
+              "label": "Rule of 40"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "XLSX",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., Use NTM estimates, include 3-year historical averages"
+        }
+      ]
+    }
+  ]
+}

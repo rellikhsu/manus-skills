@@ -1,0 +1,60 @@
+{
+  "submit_label": "Compare ETFs",
+  "query_template": "Compare ETF overlap for {{first_etf_ticker}} and {{second_etf_ticker}}. Additional ETFs: {{additional_etf_tickers}}. Analysis depth: {{analysis_depth}}. Additional context: {{additional_context}}",
+  "pages": [
+    {
+      "title": "Compare ETFs",
+      "fields": [
+        {
+          "key": "first_etf_ticker",
+          "label": "First ETF ticker",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g. VOO"
+        },
+        {
+          "key": "second_etf_ticker",
+          "label": "Second ETF ticker",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g. QQQ"
+        },
+        {
+          "key": "additional_etf_tickers",
+          "label": "Additional ETF tickers (optional)",
+          "type": "text",
+          "required": false,
+          "placeholder": "Comma-separated tickers e.g. VTI, SCHD, IWM"
+        },
+        {
+          "key": "analysis_depth",
+          "label": "Analysis depth",
+          "type": "select",
+          "required": true,
+          "default": "Quick comparison",
+          "options": [
+            {
+              "label": "Quick comparison",
+              "value": "Quick comparison"
+            },
+            {
+              "label": "Standard analysis",
+              "value": "Standard analysis"
+            },
+            {
+              "label": "In-depth analysis",
+              "value": "In-depth analysis"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "label": "Additional context (optional)",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "e.g. I'm choosing between these ETFs for a taxable brokerage account; focus on mega-cap tech overlap and diversification."
+        }
+      ]
+    }
+  ]
+}

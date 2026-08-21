@@ -1,0 +1,203 @@
+{
+  "submit_label": "Build industry overview",
+  "query_template": "Build an investor-ready industry overview of the {{industry}} market.\nAnchor company (optional): {{anchor_company}}\nGeographic scope: {{geography}}\nAnalysis horizon: {{horizon}}\nFocus areas: {{focus_areas}}\nData source: {{data_source}}\nOutput format: {{output_format}}\nAdditional context: {{additional_context}}",
+  "pages": [
+    {
+      "title": "Define the market",
+      "fields": [
+        {
+          "key": "industry",
+          "type": "text",
+          "label": "Industry or market",
+          "required": true,
+          "placeholder": "e.g., semiconductor equipment, managed care, quick-service restaurants"
+        },
+        {
+          "key": "anchor_company",
+          "type": "text",
+          "label": "Anchor company or ticker (optional)",
+          "required": false,
+          "placeholder": "e.g., ASML \u2014 grounds the market definition in what this company sells"
+        },
+        {
+          "key": "geography",
+          "type": "multi_select",
+          "label": "Geographic scope",
+          "required": false,
+          "default": "Global",
+          "options": [
+            {
+              "value": "Global",
+              "label": "Global"
+            },
+            {
+              "value": "North America",
+              "label": "North America"
+            },
+            {
+              "value": "Europe",
+              "label": "Europe"
+            },
+            {
+              "value": "Asia-Pacific",
+              "label": "Asia-Pacific"
+            },
+            {
+              "value": "Middle East & Africa",
+              "label": "Middle East & Africa"
+            },
+            {
+              "value": "Latin America",
+              "label": "Latin America"
+            },
+            {
+              "value": "India",
+              "label": "India"
+            }
+          ]
+        },
+        {
+          "key": "horizon",
+          "type": "select",
+          "label": "Analysis horizon",
+          "required": true,
+          "default": "3\u20135 years",
+          "options": [
+            {
+              "value": "1\u20132 years",
+              "label": "1\u20132 years"
+            },
+            {
+              "value": "3\u20135 years",
+              "label": "3\u20135 years"
+            },
+            {
+              "value": "5+ years",
+              "label": "5+ years"
+            }
+          ]
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Daloopa",
+            "Morningstar",
+            "PitchBook",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF (Presentation)",
+          "options": [
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "focus_areas",
+          "type": "multi_select",
+          "label": "Focus areas",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "description": "Leave blank for full coverage; select to deepen specific sections.",
+          "options": [
+            {
+              "value": "Market sizing",
+              "label": "Market sizing"
+            },
+            {
+              "value": "Profit pools & value chain",
+              "label": "Profit pools & value chain"
+            },
+            {
+              "value": "Growth drivers",
+              "label": "Growth drivers"
+            },
+            {
+              "value": "Cyclicality",
+              "label": "Cyclicality"
+            },
+            {
+              "value": "Regulation",
+              "label": "Regulation"
+            },
+            {
+              "value": "Industry economics",
+              "label": "Industry economics"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., evaluating a new position in the space; care most about the 2027+ demand outlook"
+        }
+      ]
+    }
+  ]
+}

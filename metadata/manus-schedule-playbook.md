@@ -1,8 +1,8 @@
 每週一 08:00（Asia/Taipei）執行以下工作，使用已授權的 GitHub connector 存取 private repository `https://github.com/rellikhsu/manus-skills`。不要使用 sandbox 內的 `/home/ubuntu` 檔案，也不要把本機檔案狀態當作同步成功。
 
-先讀取 `metadata/source-commits.json`、`metadata/manus-imports.tsv` 與 mirror 的最新 commit，確認三個上游來源：`https://github.com/mattpocock/skills`、`https://github.com/awslabs/agent-plugins`、`https://github.com/obra/superpowers`。比對上次執行記錄；若 mirror commit 沒有變更，回報「mirror 無變更」並停止，不要重複匯入。
+先讀取 `metadata/source-commits.json`、`metadata/manus-imports.tsv` 與 mirror 的最新 commit，確認四個上游來源：`https://github.com/mattpocock/skills`、`https://github.com/awslabs/agent-plugins`、`https://github.com/obra/superpowers`、`https://github.com/rellikhsu/harness-engineering`。另外讀取 `perplexity` 手動 namespace 的 bundle row；它來自使用者提供的 Perplexity export，不由 upstream sync 重新抓取。比對上次執行記錄；若 mirror commit 沒有變更，回報「mirror 無變更」並停止，不要重複匯入。
 
-若 mirror commit 有變更，讀取 `metadata/manus-imports.tsv` 中的三個 bundle URL 與來源 commit，列出變更的 namespace 和 skills。接著只使用 Manus 官方支援的個人 Skills library 更新方法處理變更；不得修改無法確認來源的其他 skills，不得刪除個人 skills，不得透過 Claude Code 或本機 `.agents`／`.claude` 目錄冒充 Manus 更新。
+若 mirror commit 有變更，讀取 `metadata/manus-imports.tsv` 中的 upstream bundle URL 與來源 commit，並另列 `perplexity` bundle URL 及其手動來源，列出變更的 namespace 和 skills。接著只使用 Manus 官方支援的個人 Skills library 更新方法處理變更；不得修改無法確認來源的其他 skills，不得刪除個人 skills，不得透過 Claude Code 或本機 `.agents`／`.claude` 目錄冒充 Manus 更新。
 
 如果目前執行環境沒有能把 private GitHub 內容寫入 Manus 個人 Skills library 的正式操作，必須明確回報「GitHub connector 可讀取 private mirror，但目前沒有可用的 Skills library 寫入 API／操作」，並列出待更新的 bundle、mirror commit、失敗原因與下次可重試的步驟；不要把 GitHub Actions 成功或讀取成功宣稱為 Manus Skills 已更新。
 

@@ -1,0 +1,120 @@
+{
+  "submit_label": "Build market map",
+  "query_template": "Build a market map for the {{industry}} industry.\nGeographic focus: {{geography}}\nFunding stages: {{funding_stage}}\nOutput format: {{output_format}}\nAdditional requirements: {{requirements}}",
+  "pages": [
+    {
+      "title": "Define the market",
+      "fields": [
+        {
+          "key": "industry",
+          "type": "text",
+          "label": "Industry or vertical",
+          "required": true,
+          "placeholder": "e.g., AI infrastructure, vertical SaaS for healthcare, cybersecurity"
+        },
+        {
+          "key": "geography",
+          "type": "multi_select",
+          "label": "Geographic focus",
+          "required": false,
+          "options": [
+            {
+              "value": "Global",
+              "label": "Global"
+            },
+            {
+              "value": "North America",
+              "label": "North America"
+            },
+            {
+              "value": "Europe",
+              "label": "Europe"
+            },
+            {
+              "value": "Asia-Pacific",
+              "label": "Asia-Pacific"
+            },
+            {
+              "value": "Middle East & Africa",
+              "label": "Middle East & Africa"
+            },
+            {
+              "value": "Latin America",
+              "label": "Latin America"
+            },
+            {
+              "value": "UK & Ireland",
+              "label": "UK & Ireland"
+            },
+            {
+              "value": "India",
+              "label": "India"
+            }
+          ]
+        },
+        {
+          "key": "funding_stage",
+          "type": "multi_select",
+          "label": "Funding stage",
+          "required": false,
+          "options": [
+            {
+              "value": "Bootstrapped",
+              "label": "Bootstrapped"
+            },
+            {
+              "value": "Stealth",
+              "label": "Stealth"
+            },
+            {
+              "value": "Pre-Seed / Seed",
+              "label": "Pre-Seed / Seed"
+            },
+            {
+              "value": "Series A-B",
+              "label": "Series A-B"
+            },
+            {
+              "value": "Series C+",
+              "label": "Series C+"
+            },
+            {
+              "value": "Public",
+              "label": "Public"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "options": [
+            {
+              "value": "Interactive web page",
+              "label": "Interactive web page"
+            },
+            {
+              "value": "Polished slide",
+              "label": "Polished slide"
+            },
+            {
+              "value": "Excel spreadsheet",
+              "label": "Excel spreadsheet"
+            }
+          ],
+          "default": "Interactive web page"
+        },
+        {
+          "key": "requirements",
+          "type": "textarea",
+          "label": "Additional requirements",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., $5M+ ARR, 50%+ YoY growth, must have AI/ML product"
+        }
+      ]
+    }
+  ]
+}

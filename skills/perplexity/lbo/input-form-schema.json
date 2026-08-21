@@ -1,0 +1,217 @@
+{
+  "submit_label": "Build LBO model",
+  "query_template": "Build a leveraged buyout model for {{target}}. Deal type: {{deal_type}}. Offer premium (public targets): {{offer_premium}}. Entry multiple or price override: {{entry_multiple}}. Hold period: {{hold_period}} years. Target leverage: {{leverage}}. Debt structure: {{debt_structure}}. Rollover equity: {{rollover_equity}}. Exit multiple assumption: {{exit_multiple}}. Reference documents: see the files attached to this turn. Additional context: {{context}}. Preferred data source: {{data_source}}. Output format: {{output_format}}.",
+  "pages": [
+    {
+      "title": "LBO model setup",
+      "description": "Transaction assumptions, operating model, multi-tranche debt schedule with cash sweep, covenant headroom, returns with attribution, and sensitivities are always included.",
+      "fields": [
+        {
+          "key": "target",
+          "type": "text",
+          "label": "Target company",
+          "required": true,
+          "placeholder": "e.g., DOCU, or 'Acme Software (private)'",
+          "description": "Public ticker/name for a take-private, or a private company name. Attach financials below for private targets."
+        },
+        {
+          "key": "deal_type",
+          "type": "select",
+          "label": "Deal type",
+          "required": false,
+          "default": "Auto-detect",
+          "options": [
+            {
+              "value": "Auto-detect",
+              "label": "Auto-detect",
+              "description": "Public-to-private if the target trades publicly; private otherwise"
+            },
+            {
+              "value": "Public-to-private",
+              "label": "Public-to-private",
+              "description": "Offer premium on the current quoted price; fully diluted shares via treasury stock method"
+            },
+            {
+              "value": "Private target",
+              "label": "Private target",
+              "description": "Entry multiple on user-provided or triangulated EBITDA with confidence flags"
+            }
+          ]
+        },
+        {
+          "key": "offer_premium",
+          "type": "text",
+          "label": "Offer premium (public targets)",
+          "required": false,
+          "placeholder": "e.g., 30%",
+          "description": "Premium to the current share price. Default 30% if blank, stated as an assumption."
+        },
+        {
+          "key": "entry_multiple",
+          "type": "text",
+          "label": "Entry multiple or price (private targets / override)",
+          "required": false,
+          "placeholder": "e.g., 11.0x LTM EBITDA, or $2.4B EV",
+          "description": "Entry EV/EBITDA or a fixed enterprise value. If blank for private targets, derived from peer trading multiples with an explicit note."
+        },
+        {
+          "key": "hold_period",
+          "type": "select",
+          "label": "Hold period",
+          "required": false,
+          "default": "5 years",
+          "options": [
+            {
+              "value": "3 years",
+              "label": "3 years"
+            },
+            {
+              "value": "5 years",
+              "label": "5 years"
+            },
+            {
+              "value": "7 years",
+              "label": "7 years"
+            }
+          ]
+        },
+        {
+          "key": "leverage",
+          "type": "text",
+          "label": "Target leverage",
+          "required": false,
+          "placeholder": "e.g., 5.5x total: 4.0x TLB, 1.5x notes",
+          "description": "Total leverage in turns of LTM EBITDA, with tranche split if you have one. Default 5.0\u20135.5x if blank."
+        },
+        {
+          "key": "debt_structure",
+          "type": "multi_select",
+          "label": "Debt tranches",
+          "required": false,
+          "description": "Default if blank: revolver (undrawn) + TLB + senior notes. Rates built as base rate + spread from current market data.",
+          "options": [
+            {
+              "value": "Revolver (undrawn, commitment fee)",
+              "label": "Revolver (undrawn, commitment fee)"
+            },
+            {
+              "value": "Term Loan A (amortizing)",
+              "label": "Term Loan A (amortizing)"
+            },
+            {
+              "value": "Term Loan B (1% amortization, cash sweep)",
+              "label": "Term Loan B (1% amortization, cash sweep)"
+            },
+            {
+              "value": "Senior notes (bullet)",
+              "label": "Senior notes (bullet)"
+            },
+            {
+              "value": "Mezzanine with PIK toggle",
+              "label": "Mezzanine with PIK toggle"
+            }
+          ]
+        },
+        {
+          "key": "rollover_equity",
+          "type": "text",
+          "label": "Rollover equity",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., 20% management rollover",
+          "description": "Management or seller equity rolled into the deal, tracked as a separate class through exit."
+        },
+        {
+          "key": "exit_multiple",
+          "type": "text",
+          "label": "Exit multiple",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., 10.0x, or 'entry flat'",
+          "description": "Default: exit at the entry multiple. Any assumed expansion is flagged prominently in the returns story."
+        },
+        {
+          "key": "reference_files",
+          "type": "file",
+          "label": "Reference documents",
+          "required": false,
+          "accept": ".pdf,.docx,.xlsx,.csv,.txt,.pptx",
+          "accept_description": "CIM, databook, financial statements, prior models, lender presentations, or other reference material \u2014 primary source for private targets"
+        },
+        {
+          "key": "context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., Assume 300 bps EBITDA margin expansion by year 3, 75% cash sweep, covenant net leverage 6.0x with step-downs"
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "Daloopa",
+            "FactSet",
+            "PitchBook"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "XLSX",
+          "options": [
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

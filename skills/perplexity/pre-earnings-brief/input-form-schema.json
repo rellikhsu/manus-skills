@@ -1,0 +1,85 @@
+{
+  "submit_label": "Generate preview",
+  "query_template": "Generate an earnings preview report for {{companies}} using preferred data source {{data_source}}. Include consensus estimates, key metrics to watch, historical patterns, and market impact scenarios. Additional focus: {{focus}}",
+  "pages": [
+    {
+      "title": "Earnings preview",
+      "fields": [
+        {
+          "key": "companies",
+          "type": "textarea",
+          "label": "Company or companies",
+          "required": true,
+          "placeholder": "e.g., NVDA, AAPL, MSFT or Apple, Microsoft"
+        },
+        {
+          "key": "focus",
+          "type": "textarea",
+          "label": "Specific focus areas",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., AI revenue segment, China exposure, margin trajectory"
+        },
+        {
+          "key": "data_source",
+          "type": "select",
+          "label": "Preferred data source",
+          "required": true,
+          "description": "Select the authoritative source for all figures and data pulls.",
+          "default": "Perplexity Finance",
+          "options": [
+            {
+              "value": "Perplexity Finance",
+              "label": "Perplexity Finance"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook"
+            },
+            {
+              "value": "Carbon Arc",
+              "label": "Carbon Arc"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

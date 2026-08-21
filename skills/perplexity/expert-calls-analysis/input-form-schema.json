@@ -1,0 +1,144 @@
+{
+  "submit_label": "Analyze expert calls",
+  "query_template": "Run an expert calls analysis for {{company}}: surface the most relevant Guidepoint expert-call interviews on the target and its comps over the lookback window {{lookback_window}}, extract quote-backed themes, separate corroborated signal from single-source anecdote, track expert tone across quarters, and map findings to the target's KPIs and live investor debates \u2014 every claim tied to a dated interview. Peer set override: {{peers}}. Focus themes: {{focus_themes}}. Data sources: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}.",
+  "pages": [
+    {
+      "title": "Whose expert calls do you want analyzed?",
+      "description": "Synthesize what customers, competitors, channel partners, and former employees are saying \u2014 quote-backed and dated",
+      "fields": [
+        {
+          "key": "company",
+          "type": "text",
+          "label": "Company or ticker",
+          "required": true,
+          "placeholder": "e.g., CRWD, LULU, Databricks"
+        },
+        {
+          "key": "peers",
+          "type": "textarea",
+          "label": "Comp set override",
+          "required": false,
+          "placeholder": "e.g., PANW, ZS, S \u2014 leave blank to derive from the peer tool and the 10-K competitor set",
+          "description": "Leave blank to have the comp set built automatically with rationale for each peer."
+        },
+        {
+          "key": "focus_themes",
+          "type": "multi_select",
+          "label": "Focus themes",
+          "required": false,
+          "description": "Leave empty to let the evidence rank the themes.",
+          "options": [
+            {
+              "value": "Demand",
+              "label": "Demand"
+            },
+            {
+              "value": "Pricing",
+              "label": "Pricing"
+            },
+            {
+              "value": "Competition",
+              "label": "Competition"
+            },
+            {
+              "value": "Execution / management",
+              "label": "Execution / management"
+            },
+            {
+              "value": "Product",
+              "label": "Product"
+            },
+            {
+              "value": "Channel",
+              "label": "Channel"
+            }
+          ]
+        },
+        {
+          "key": "lookback_window",
+          "type": "select",
+          "label": "Lookback window",
+          "required": false,
+          "default": "Last 12 months",
+          "collapsible_group": "Additional settings",
+          "options": [
+            {
+              "value": "Last 6 months",
+              "label": "Last 6 months"
+            },
+            {
+              "value": "Last 12 months",
+              "label": "Last 12 months"
+            },
+            {
+              "value": "Last 18 months",
+              "label": "Last 18 months"
+            },
+            {
+              "value": "Last 24 months",
+              "label": "Last 24 months"
+            }
+          ]
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Guidepoint is the expert-call engine of this skill; providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Guidepoint (expert calls)",
+            "Perplexity Finance (built-in)"
+          ],
+          "options": [
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)"
+            },
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., we are testing whether the NRR stabilization debate is resolvable; weight customer and channel interviews."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "submit_label": "Map the debates",
+  "query_template": "Identify and map the key investor debates for {{ticker}}: rank them by valuation sensitivity, map bull/base/bear positions and disconfirming evidence, quantify KPI and valuation impact, summarize the last 8 quarters of sentiment and setup with an annotated price history, and generate management diligence questions for public Q&A and private 1:1 meetings. Debates or theses to stress-test: {{debate_focus}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. {{additional_context}}",
+  "pages": [
+    {
+      "title": "Which company's debates do you want mapped?",
+      "description": "Find the disagreements that actually drive the stock \u2014 and the questions that resolve them",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Stock ticker",
+          "required": true,
+          "placeholder": "e.g., NVDA, SHOP, ASML"
+        },
+        {
+          "key": "debate_focus",
+          "type": "textarea",
+          "label": "Debates or theses to stress-test",
+          "required": false,
+          "placeholder": "e.g., Is datacenter capex durability the real debate? Or: test whether gross margin trajectory and China exposure rank as key debates.",
+          "description": "Optional. Your candidate debates will be ranked against everything mined from transcripts and estimates \u2014 and displaced if the evidence says so."
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., We meet the CFO at an NDR next month \u2014 weight the private 1:1 question bank. Or: we are short; emphasize what the bulls must explain away."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Daloopa",
+            "Morningstar",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

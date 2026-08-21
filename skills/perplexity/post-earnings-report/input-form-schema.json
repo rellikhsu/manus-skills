@@ -1,0 +1,143 @@
+{
+  "submit_label": "Generate",
+  "query_template": "Generate post-earnings materials for {{company_name}} ({{ticker}}). Fiscal quarter: {{fiscal_quarter}}. Earnings release date: {{earnings_date}}. Priority mode: {{priority_mode}}. Requested outputs: {{output_format}}. Preferred data source: {{data_source}}. Intended recipient: {{recipient_email}}. PM priorities and debate questions: {{pm_priorities}}. Internal materials: see the files attached to this turn. Follow the post-earnings memo framework in the system instructions and produce only the requested output artifacts.",
+  "pages": [
+    {
+      "title": "Earnings print details",
+      "description": "Provide the ticker and quarter context to tailor the analysis.",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Ticker",
+          "required": true,
+          "placeholder": "e.g., MOD, V, ASML"
+        },
+        {
+          "key": "company_name",
+          "type": "text",
+          "label": "Company name",
+          "required": false,
+          "placeholder": "Leave blank to auto-resolve from ticker"
+        },
+        {
+          "key": "fiscal_quarter",
+          "type": "text",
+          "label": "Fiscal quarter",
+          "required": false,
+          "placeholder": "MRQ by default, or specify e.g., Q3 FY2026"
+        },
+        {
+          "key": "earnings_date",
+          "type": "date",
+          "label": "Earnings release date",
+          "required": false,
+          "collapsible_group": "Additional settings"
+        },
+        {
+          "key": "priority_mode",
+          "type": "select",
+          "label": "Priority mode",
+          "required": true,
+          "default": "Balanced",
+          "options": [
+            {
+              "value": "Speed",
+              "label": "Speed",
+              "description": "Prioritize fastest delivery; compress lower-value sections"
+            },
+            {
+              "value": "Balanced",
+              "label": "Balanced",
+              "description": "Balanced depth and speed"
+            },
+            {
+              "value": "Variant insight",
+              "label": "Variant insight",
+              "description": "Maximize analytical depth and variant perception"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "multi_select",
+          "label": "Outputs",
+          "required": true,
+          "options": [
+            {
+              "value": "PDF memo",
+              "label": "PDF memo"
+            },
+            {
+              "value": "Interactive dashboard",
+              "label": "Interactive dashboard"
+            },
+            {
+              "value": "PDF presentation",
+              "label": "PDF presentation"
+            },
+            {
+              "value": "XLSX workbook",
+              "label": "XLSX workbook"
+            }
+          ]
+        },
+        {
+          "key": "recipient_email",
+          "type": "text",
+          "label": "Intended recipient email",
+          "required": false,
+          "placeholder": "For external delivery context",
+          "collapsible_group": "Additional settings"
+        },
+        {
+          "key": "pm_priorities",
+          "type": "textarea",
+          "label": "PM priorities / debate questions",
+          "required": false,
+          "placeholder": "Specific debates, areas of emphasis, or time horizon",
+          "collapsible_group": "Additional settings"
+        },
+        {
+          "key": "internal_materials",
+          "type": "file",
+          "label": "Internal materials",
+          "required": false,
+          "accept": ".pdf,.docx,.xlsx,.md,.txt",
+          "accept_description": "Current model, prior memo, thesis notes, or diligence files",
+          "collapsible_group": "Additional settings"
+        },
+        {
+          "key": "data_source",
+          "type": "select",
+          "label": "Preferred data source",
+          "required": true,
+          "description": "Select the authoritative source for figures and data pulls.",
+          "default": "Perplexity Finance",
+          "options": [
+            {
+              "value": "Perplexity Finance",
+              "label": "Perplexity Finance"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

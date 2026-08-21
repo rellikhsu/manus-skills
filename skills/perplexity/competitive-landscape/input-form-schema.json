@@ -1,0 +1,171 @@
+{
+  "submit_label": "Build competitive landscape",
+  "query_template": "Build a competitive landscape analysis for {{company}}. Market/segment scope: {{market_scope}}. Competitor set: {{competitors}}. Share metric basis: {{share_basis}}. Lookback window: {{lookback}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}.",
+  "pages": [
+    {
+      "title": "Define the arena",
+      "description": "Set the focal company, competitive scope, and how share should be measured.",
+      "fields": [
+        {
+          "key": "company",
+          "type": "text",
+          "label": "Focal company or ticker",
+          "required": true,
+          "placeholder": "e.g., UBER, ASML, Databricks (private companies supported)"
+        },
+        {
+          "key": "market_scope",
+          "type": "textarea",
+          "label": "Market or segment scope",
+          "required": false,
+          "placeholder": "e.g., U.S. rideshare; enterprise cloud data platforms; global lithography",
+          "description": "Leave blank to analyze the arena driving the largest share of the focal company's revenue."
+        },
+        {
+          "key": "competitors",
+          "type": "textarea",
+          "label": "Competitor set",
+          "required": false,
+          "placeholder": "e.g., Lyft, DoorDash, Bolt \u2014 leave blank for auto-selection; private players welcome"
+        },
+        {
+          "key": "share_basis",
+          "type": "select",
+          "label": "Share metric basis",
+          "required": true,
+          "default": "Auto (industry convention)",
+          "description": "The metric used for market share and share-shift math.",
+          "options": [
+            {
+              "value": "Auto (industry convention)",
+              "label": "Auto (industry convention)"
+            },
+            {
+              "value": "Revenue",
+              "label": "Revenue"
+            },
+            {
+              "value": "Units / volume",
+              "label": "Units / volume"
+            },
+            {
+              "value": "GMV / TPV",
+              "label": "GMV / TPV"
+            },
+            {
+              "value": "Subscribers / users",
+              "label": "Subscribers / users"
+            }
+          ]
+        },
+        {
+          "key": "lookback",
+          "type": "select",
+          "label": "Lookback window",
+          "required": true,
+          "default": "3 years + latest LTM",
+          "options": [
+            {
+              "value": "3 years + latest LTM",
+              "label": "3 years + latest LTM"
+            },
+            {
+              "value": "5 years + latest LTM",
+              "label": "5 years + latest LTM"
+            },
+            {
+              "value": "10 years + latest LTM",
+              "label": "10 years + latest LTM"
+            }
+          ]
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Daloopa",
+            "Morningstar",
+            "PitchBook",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., focus on the enterprise segment; treat the pending merger as closed; emphasize pricing conduct"
+        }
+      ]
+    }
+  ]
+}

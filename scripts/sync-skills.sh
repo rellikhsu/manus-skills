@@ -132,6 +132,10 @@ write_import_metadata() {
     local skill_path="${relative_path%/SKILL.md}"
     printf 'harness-engineering\t%s\thttps://github.com/rellikhsu/harness-engineering/tree/main/%s\thttps://github.com/rellikhsu/harness-engineering\n'       "$skill_name" "$skill_path" >> "$metadata_file"
   done < <(find "$WORK_DIR/harness/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md -print | sort)
+  while IFS= read -r skill_file; do
+    local skill_name="$(basename "$(dirname "$skill_file")")"
+    printf 'perplexity\t%s\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/%s\thttps://www.perplexity.ai/computer/skills\n' "$skill_name" "$skill_name" >> "$metadata_file"
+  done < <(find "$ROOT_DIR/skills/perplexity" -mindepth 2 -maxdepth 2 -type f -name SKILL.md -print | sort)
 }
 write_manus_bundle_metadata() {
   local metadata_file="$ROOT_DIR/metadata/manus-imports.tsv"
@@ -140,6 +144,7 @@ write_manus_bundle_metadata() {
   printf 'aws-skills\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/aws\thttps://github.com/awslabs/agent-plugins\n' >> "$metadata_file"
   printf 'superpowers\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/superpowers\thttps://github.com/obra/superpowers\n' >> "$metadata_file"
   printf 'harness-engineering\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/harness-engineering\thttps://github.com/rellikhsu/harness-engineering\n' >> "$metadata_file"
+  printf 'perplexity\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity\thttps://www.perplexity.ai/computer/skills\n' >> "$metadata_file"
 }
 clone_source "$MATT_REPO" matt
 clone_source "$AWS_REPO" aws

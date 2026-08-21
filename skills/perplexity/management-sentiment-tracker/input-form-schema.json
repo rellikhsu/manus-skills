@@ -1,0 +1,152 @@
+{
+  "submit_label": "Track sentiment",
+  "query_template": "Run a management sentiment tracker analysis on {{ticker}}. Lookback window: {{lookback_window}}. Sources to analyze: {{analysis_scope}}. Focus topics: {{focus_topics}}. Preferred data source: {{data_source}}. Output format: {{output_format}}. {{additional_context}}",
+  "pages": [
+    {
+      "title": "Whose language do you want to track?",
+      "description": "Quote-backed shifts in management language across calls and filings",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Stock ticker",
+          "required": true,
+          "placeholder": "e.g., NVDA, PYPL, BA"
+        },
+        {
+          "key": "lookback_window",
+          "type": "select",
+          "label": "Lookback window",
+          "required": true,
+          "default": "Last 8 quarters",
+          "options": [
+            {
+              "value": "Last 4 quarters",
+              "label": "Last 4 quarters"
+            },
+            {
+              "value": "Last 8 quarters",
+              "label": "Last 8 quarters"
+            },
+            {
+              "value": "Last 12 quarters",
+              "label": "Last 12 quarters"
+            },
+            {
+              "value": "Last 16 quarters",
+              "label": "Last 16 quarters"
+            }
+          ]
+        },
+        {
+          "key": "analysis_scope",
+          "type": "multi_select",
+          "label": "Sources to analyze",
+          "required": false,
+          "description": "Leave empty to analyze all three sources.",
+          "options": [
+            {
+              "value": "Earnings transcripts (prepared remarks & Q&A)",
+              "label": "Earnings transcripts (prepared remarks & Q&A)",
+              "icon": "message-square"
+            },
+            {
+              "value": "MD&A drafting changes (10-Q/10-K)",
+              "label": "MD&A drafting changes (10-Q/10-K)",
+              "icon": "file-chart-column"
+            },
+            {
+              "value": "Material risk-factor changes",
+              "label": "Material risk-factor changes",
+              "icon": "scale"
+            }
+          ]
+        },
+        {
+          "key": "focus_topics",
+          "type": "textarea",
+          "label": "Focus topics",
+          "required": false,
+          "placeholder": "e.g., China demand, gross margin trajectory, AI capex payback, customer concentration"
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., I think management went quiet on enterprise bookings after Q1 \u2014 verify. Or: compare new CFO's language vs predecessor."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Perplexity Finance (built-in)",
+            "FactSet"
+          ],
+          "options": [
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ],
+          "collapsible_group": "Additional settings"
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF memo",
+          "options": [
+            {
+              "value": "PDF memo",
+              "label": "PDF memo"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX quote register",
+              "label": "XLSX quote register"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

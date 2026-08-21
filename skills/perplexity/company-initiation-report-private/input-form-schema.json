@@ -1,0 +1,228 @@
+{
+  "submit_label": "Generate initiation report",
+  "query_template": "Produce a private-company initiation report on {{company_name}}. Company website: {{website}}. Stage: {{stage}}. Evaluation context: {{evaluation_context}}. Research scope: {{scope}}. Comparable companies: {{peers}}. Key debates to address: {{key_debates}}. Uploaded materials: see the files attached to this turn. Data source: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}.",
+  "pages": [
+    {
+      "title": "Coverage target",
+      "fields": [
+        {
+          "key": "company_name",
+          "type": "text",
+          "label": "Company name",
+          "required": true,
+          "placeholder": "e.g., Stripe, Databricks, Anduril"
+        },
+        {
+          "key": "website",
+          "type": "text",
+          "label": "Company website",
+          "required": false,
+          "placeholder": "e.g., stripe.com \u2014 helps disambiguate; leave blank to auto-resolve"
+        },
+        {
+          "key": "stage",
+          "type": "select",
+          "label": "Stage",
+          "required": true,
+          "default": "Auto-detect",
+          "options": [
+            {
+              "value": "Auto-detect",
+              "label": "Auto-detect"
+            },
+            {
+              "value": "Seed / Series A",
+              "label": "Seed / Series A"
+            },
+            {
+              "value": "Series B\u2013C / Growth",
+              "label": "Series B\u2013C / Growth"
+            },
+            {
+              "value": "Late stage / Pre-IPO",
+              "label": "Late stage / Pre-IPO"
+            }
+          ]
+        },
+        {
+          "key": "evaluation_context",
+          "type": "select",
+          "label": "Evaluation context",
+          "required": true,
+          "default": "General coverage initiation",
+          "description": "Shapes emphasis (e.g., secondary purchases weight the preference stack and secondary marks more heavily).",
+          "options": [
+            {
+              "value": "General coverage initiation",
+              "label": "General coverage initiation"
+            },
+            {
+              "value": "Evaluating a primary round",
+              "label": "Evaluating a primary round"
+            },
+            {
+              "value": "Evaluating a secondary purchase",
+              "label": "Evaluating a secondary purchase"
+            },
+            {
+              "value": "Pre-IPO / crossover coverage",
+              "label": "Pre-IPO / crossover coverage"
+            }
+          ]
+        },
+        {
+          "key": "scope",
+          "type": "multi_select",
+          "label": "Research scope",
+          "required": true,
+          "options": [
+            {
+              "value": "All core sections",
+              "label": "All core sections"
+            },
+            {
+              "value": "Business model & market",
+              "label": "Business model & market"
+            },
+            {
+              "value": "Funding, ownership & preference stack",
+              "label": "Funding, ownership & preference stack"
+            },
+            {
+              "value": "Revenue quality, unit economics, burn & runway",
+              "label": "Revenue quality, unit economics, burn & runway"
+            },
+            {
+              "value": "Governance & board",
+              "label": "Governance & board"
+            },
+            {
+              "value": "Valuation triangulation",
+              "label": "Valuation triangulation"
+            },
+            {
+              "value": "Scenarios",
+              "label": "Scenarios"
+            },
+            {
+              "value": "Risks & diligence gaps",
+              "label": "Risks & diligence gaps"
+            }
+          ]
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider you want this run to draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "PitchBook",
+            "Perplexity Finance (built-in)",
+            "FactSet",
+            "Carbon Arc (alt data)",
+            "Guidepoint (expert calls)"
+          ],
+          "options": [
+            {
+              "value": "PitchBook",
+              "label": "PitchBook",
+              "description": "Private company rounds, valuations, cap tables, sponsor M&A \u2014 requires connected PitchBook"
+            },
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)",
+              "description": "Always available \u2014 live quotes, financials, estimates, transcripts, macro data"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet",
+              "description": "Consensus estimates, fundamentals, ownership, M&A \u2014 requires connected FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa",
+              "description": "Analyst-grade historical fundamentals and KPIs with filing citations \u2014 requires connected Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar",
+              "description": "Fundamentals, fair values, fund and ETF data \u2014 requires connected Morningstar"
+            },
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)",
+              "description": "Alternative data: demand and transaction signals to corroborate or challenge reported KPIs \u2014 requires connected Carbon Arc"
+            },
+            {
+              "value": "Guidepoint (expert calls)",
+              "label": "Guidepoint (expert calls)",
+              "description": "Expert interview transcripts: customers, competitors, former employees \u2014 requires connected Guidepoint"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF (Presentation)",
+          "options": [
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Comps, debates, materials",
+      "fields": [
+        {
+          "key": "peers",
+          "type": "textarea",
+          "label": "Comparable companies",
+          "required": false,
+          "placeholder": "Public comps and private peers; leave blank for auto-selection"
+        },
+        {
+          "key": "key_debates",
+          "type": "textarea",
+          "label": "Key debates to address",
+          "required": false,
+          "placeholder": "2\u20134 questions that will determine the outcome, e.g., is reported ARR durable?"
+        },
+        {
+          "key": "context_file",
+          "type": "file",
+          "label": "Upload materials",
+          "required": false,
+          "accept": ".pdf,.doc,.docx,.ppt,.pptx,.csv,.xlsx,.txt",
+          "max_size_mb": 40,
+          "accept_description": "Decks, data-room excerpts, financials, or prior research"
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., Considering a $5M secondary block at a 20% discount to the last round"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "submit_label": "Generate initiation report",
+  "query_template": "Produce a long-only initiation report on {{company_name}} ({{ticker}}). Horizon: {{horizon}}. Research scope: {{scope}}. Peer set: {{peers}}. Key debates to address: {{key_debates}}. Valuation methodology: {{valuation_methods}}. Data source: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}.",
+  "pages": [
+    {
+      "title": "Coverage target",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Ticker",
+          "required": true,
+          "placeholder": "e.g., MSFT, ASML, V"
+        },
+        {
+          "key": "company_name",
+          "type": "text",
+          "label": "Company name",
+          "required": false,
+          "placeholder": "Leave blank to auto-resolve"
+        },
+        {
+          "key": "horizon",
+          "type": "select",
+          "label": "Investment horizon",
+          "required": true,
+          "options": [
+            {
+              "value": "1\u20132 years",
+              "label": "1\u20132 years"
+            },
+            {
+              "value": "3\u20135 years",
+              "label": "3\u20135 years"
+            },
+            {
+              "value": "5+ years",
+              "label": "5+ years"
+            }
+          ],
+          "default": "3\u20135 years"
+        },
+        {
+          "key": "scope",
+          "type": "multi_select",
+          "label": "Research scope",
+          "required": true,
+          "options": [
+            {
+              "value": "All core sections",
+              "label": "All core sections"
+            },
+            {
+              "value": "Business model",
+              "label": "Business model"
+            },
+            {
+              "value": "Company history",
+              "label": "Company history"
+            },
+            {
+              "value": "Industry structure",
+              "label": "Industry structure"
+            },
+            {
+              "value": "Management & capital allocation",
+              "label": "Management & capital allocation"
+            },
+            {
+              "value": "Financial outlook",
+              "label": "Financial outlook"
+            },
+            {
+              "value": "Valuation",
+              "label": "Valuation"
+            },
+            {
+              "value": "Trading setup",
+              "label": "Trading setup"
+            },
+            {
+              "value": "ESG",
+              "label": "ESG"
+            }
+          ]
+        },
+        {
+          "key": "data_source",
+          "type": "select",
+          "label": "Preferred data source",
+          "required": true,
+          "description": "Select the authoritative source for figures and data pulls.",
+          "default": "Perplexity Finance",
+          "options": [
+            {
+              "value": "Perplexity Finance",
+              "label": "Perplexity Finance"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa"
+            },
+            {
+              "value": "Morningstar",
+              "label": "Morningstar"
+            },
+            {
+              "value": "PitchBook",
+              "label": "PitchBook"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Peers, debates, methodology",
+      "fields": [
+        {
+          "key": "peers",
+          "type": "textarea",
+          "label": "Peer set",
+          "required": false,
+          "placeholder": "Leave blank for auto-selection"
+        },
+        {
+          "key": "key_debates",
+          "type": "textarea",
+          "label": "Key debates to address",
+          "required": false,
+          "placeholder": "2\u20134 debates that will define the thesis"
+        },
+        {
+          "key": "valuation_methods",
+          "type": "multi_select",
+          "label": "Valuation methodology",
+          "required": false,
+          "options": [
+            {
+              "value": "DCF",
+              "label": "DCF"
+            },
+            {
+              "value": "Trading comps",
+              "label": "Trading comps"
+            },
+            {
+              "value": "Sum-of-the-parts",
+              "label": "Sum-of-the-parts"
+            },
+            {
+              "value": "Precedent transactions",
+              "label": "Precedent transactions"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings"
+        }
+      ]
+    }
+  ]
+}

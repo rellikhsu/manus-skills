@@ -1,0 +1,141 @@
+{
+  "submit_label": "Run alt-data read",
+  "query_template": "Run an Alt Data Aggregator read for {{ticker}}. Comps override: {{comps_override}}. Scope: {{scope}}. Lookback window: {{lookback_window}}. Data sources: {{data_source}}. Output format: {{output_format}}. Additional context: {{additional_context}}. Follow the Alt Data Aggregator framework in the system instructions.",
+  "pages": [
+    {
+      "title": "Alt-data read setup",
+      "description": "Enter a ticker; comps and industry are derived automatically unless overridden.",
+      "fields": [
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Company ticker",
+          "required": true,
+          "placeholder": "e.g., CMG, NKE, ABNB"
+        },
+        {
+          "key": "comps_override",
+          "type": "textarea",
+          "label": "Comparable companies (optional)",
+          "required": false,
+          "placeholder": "e.g., SBUX, QSR, WING \u2014 leave blank to derive from peer tools and 10-K competitor sets",
+          "description": "Leave blank to derive 4-6 comps automatically with rationale for each."
+        },
+        {
+          "key": "scope",
+          "type": "multi_select",
+          "label": "Scope",
+          "required": false,
+          "default": [
+            "Company",
+            "Industry",
+            "Comps"
+          ],
+          "options": [
+            {
+              "value": "Company",
+              "label": "Company"
+            },
+            {
+              "value": "Industry",
+              "label": "Industry"
+            },
+            {
+              "value": "Comps",
+              "label": "Comps"
+            }
+          ],
+          "description": "Which benchmarking layers to include. All three by default."
+        },
+        {
+          "key": "data_source",
+          "type": "multi_select",
+          "label": "Data sources",
+          "required": false,
+          "description": "Select every data provider this run should draw on. Providers you have not connected are skipped gracefully and noted, so connecting them enriches the output. Perplexity Finance is always available.",
+          "default": [
+            "Carbon Arc (alt data)",
+            "Perplexity Finance (built-in)"
+          ],
+          "options": [
+            {
+              "value": "Carbon Arc (alt data)",
+              "label": "Carbon Arc (alt data)"
+            },
+            {
+              "value": "Perplexity Finance (built-in)",
+              "label": "Perplexity Finance (built-in)"
+            },
+            {
+              "value": "Daloopa",
+              "label": "Daloopa"
+            },
+            {
+              "value": "FactSet",
+              "label": "FactSet"
+            }
+          ]
+        },
+        {
+          "key": "output_format",
+          "type": "select",
+          "label": "Output format",
+          "required": true,
+          "default": "PDF",
+          "options": [
+            {
+              "value": "PDF",
+              "label": "PDF"
+            },
+            {
+              "value": "PDF (Presentation)",
+              "label": "PDF (Presentation)"
+            },
+            {
+              "value": "XLSX",
+              "label": "XLSX"
+            },
+            {
+              "value": "Dashboard",
+              "label": "Dashboard"
+            }
+          ]
+        },
+        {
+          "key": "lookback_window",
+          "type": "select",
+          "label": "Lookback window",
+          "required": false,
+          "default": "24 months",
+          "collapsible_group": "Additional settings",
+          "options": [
+            {
+              "value": "6 months",
+              "label": "6 months"
+            },
+            {
+              "value": "12 months",
+              "label": "12 months"
+            },
+            {
+              "value": "24 months",
+              "label": "24 months"
+            },
+            {
+              "value": "36 months",
+              "label": "36 months"
+            }
+          ]
+        },
+        {
+          "key": "additional_context",
+          "type": "textarea",
+          "label": "Additional context",
+          "required": false,
+          "collapsible_group": "Additional settings",
+          "placeholder": "e.g., current debate on US traffic, KPI in question, upcoming print date"
+        }
+      ]
+    }
+  ]
+}
