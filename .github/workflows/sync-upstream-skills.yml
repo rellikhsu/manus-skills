@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out mirror
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
@@ -47,7 +47,23 @@ jobs:
           git add README.md .github/workflows/sync-upstream-skills.yml scripts metadata skills
           if ! git diff --cached --quiet; then
             git commit -m "chore: sync upstream skills [clean mirror]"
-            git push origin main
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "ERROR: Cannot rebase generated sync commit onto origin/main." >&2
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                break
+              fi
+              if [[ "$attempt" -eq 3 ]]; then
+                echo "ERROR: Failed to push main after 3 attempts." >&2
+                exit 1
+              fi
+              echo "main advanced during sync; retrying push (attempt $((attempt + 1))/3)..."
+              sleep $((attempt * 2))
+            done
           else
             echo "No upstream changes detected on main."
           fi
@@ -64,8 +80,5 @@ jobs:
           # Secondary verification before force push
           echo "Verifying dist branch..."
           test "$(find skills -mindepth 3 -maxdepth 4 -type f -name SKILL.md | wc -l)" -gt 0
-          if find skills -mindepth 3 -maxdepth 4 -type f -name SKILL.md -exec grep -H "^name:" {} + | grep -vE 'name:\s*"?[a-zA-Z0-9_-]+:[^"]+"?'; then
-            echo "ERROR: Found un-prefixed or malformed names in child skills." >&2
-            exit 1
-          fi
+          python3 scripts/validate-dist.py
           git push origin dist --force
