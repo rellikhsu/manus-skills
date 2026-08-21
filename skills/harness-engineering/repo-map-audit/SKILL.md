@@ -1,7 +1,8 @@
 ---
-name: "harness-engineering:repo-map-audit"
+name: repo-map-audit
 description: Audit a bloated CLAUDE.md / AGENTS.md / .cursorrules and split it into a small table-of-contents entry point plus a structured docs/ knowledge base. Use when the user says the instruction file is too long or bloated, asks to audit / review / clean up / trim / reorganize CLAUDE.md or AGENTS.md, wants to split agent docs into a docs/ directory, complains that agent instructions are stale or ignored, asks how to structure repo docs for agents or set up progressive disclosure, or when you notice the root instruction file exceeds ~150 lines while working on something else.
-description-short: Audit a bloated CLAUDE.md/AGENTS.md/.cursorrules and split it into a small table-of-contents entry point plus a structured docs/ knowledge base. Use when the instruction file is too long or stale.
+metadata:
+  short-description: "Split bloated agent instructions into a small repository map and a structured docs knowledge base."
 ---
 
 # repo-map-audit

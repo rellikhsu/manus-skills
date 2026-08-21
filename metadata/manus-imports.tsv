@@ -1,4 +1,5 @@
 bundle_name	manus_github_import_url	upstream_repository
-mattpocock-skills	https://github.com/rellikhsu/manus-skills/tree/main/skills/mattpocock-skills	https://github.com/mattpocock/skills
-aws-skills	https://github.com/rellikhsu/manus-skills/tree/main/skills/aws	https://github.com/awslabs/agent-plugins
-superpowers	https://github.com/rellikhsu/manus-skills/tree/main/skills/superpowers	https://github.com/obra/superpowers
+mattpocock-skills	https://github.com/rellikhsu/manus-skills/tree/dist/skills/mattpocock-skills	https://github.com/mattpocock/skills
+aws-skills	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws	https://github.com/awslabs/agent-plugins
+superpowers	https://github.com/rellikhsu/manus-skills/tree/dist/skills/superpowers	https://github.com/obra/superpowers
+harness-engineering	https://github.com/rellikhsu/manus-skills/tree/dist/skills/harness-engineering	https://github.com/rellikhsu/harness-engineering

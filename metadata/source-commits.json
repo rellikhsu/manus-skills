@@ -1,17 +1,21 @@
 {
-  "updated_at": "2026-08-19T08:32:53Z",
+  "updated_at": "2026-08-21T03:23:37Z",
   "sources": {
     "mattpocock/skills": {
       "repository": "https://github.com/mattpocock/skills.git",
-      "commit": "9c9f36ccd3995266cd675468af71639c8dde1ec5"
+      "commit": "0ab1b63a410a03d3627979a109c8695de27af954"
     },
     "awslabs/agent-plugins": {
       "repository": "https://github.com/awslabs/agent-plugins.git",
-      "commit": "bab56a3b9991aa0c6857b05198a61ba14a60bce4"
+      "commit": "a35c295c62452468446d3a3fa7e2590cd27474ab"
     },
     "obra/superpowers": {
       "repository": "https://github.com/obra/superpowers.git",
       "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"
+    },
+    "rellikhsu/harness-engineering": {
+      "repository": "https://github.com/rellikhsu/harness-engineering.git",
+      "commit": "3e7f0389485d54d4d5087b9b942aa13e170a5d47"
     }
   }
 }

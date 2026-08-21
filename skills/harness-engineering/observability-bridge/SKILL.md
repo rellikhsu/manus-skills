@@ -1,7 +1,8 @@
 ---
-name: "harness-engineering:observability-bridge"
+name: observability-bridge
 description: Audit what the agent can actually query in this project versus what only a human can see, then build the smallest bridge that closes the gap. Use when debugging is going in circles because the agent is guessing instead of checking, when the agent says "I can't verify this myself" or "can you check the browser / paste the logs", when logs are unstructured print/console.log noise, when a UI change needs visual or console verification, when someone asks to make logs queryable, wire up browser automation through the host's browser MCP for debugging, make the app bootable so the agent can drive it, or expose metrics/traces to the agent.
-description-short: Audit what the agent can query in this project vs. what only a human can see, then build the smallest bridge that closes the gap. Use when debugging is guesswork instead of verification.
+metadata:
+  short-description: "Make human-only logs, metrics, browser state, or runtime signals directly queryable by the agent."
 ---
 
 # Observability Bridge

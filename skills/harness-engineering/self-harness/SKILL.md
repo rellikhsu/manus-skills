@@ -1,5 +1,5 @@
 ---
-name: "harness-engineering:self-harness"
+name: self-harness
 description: Use when an agent is explicitly authorized to improve its own harness from repeated, verifier-grounded execution failures while the model and evaluation controls can remain fixed.
 ---
 

@@ -1,7 +1,8 @@
 ---
-name: "harness-engineering:harness-retune"
+name: harness-retune
 description: Re-evaluate an agent harness after a model upgrade — inventory the scaffolding (sprint/phase decomposition, evaluator passes, contract negotiation, planner stages, forced context resets), empirically test which pieces the current model no longer needs, and identify newly-possible harness patterns. Use when the user says they are on a new model version and asks whether the scaffolding is still needed, "do we still need this sprint structure", "simplify the agent harness", "our workflow feels over-engineered for this model", "re-evaluate our multi-agent workflow after a model upgrade", or when planning a periodic harness audit.
-description-short: Re-evaluate an agent harness after a model upgrade: inventory the scaffolding, test which pieces the current model no longer needs, and identify newly-possible harness patterns.
+metadata:
+  short-description: "Re-evaluate harness scaffolding after a model upgrade and test what can be removed or newly attempted."
 ---
 
 # Harness Retune

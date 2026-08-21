@@ -1,7 +1,8 @@
 ---
-name: "harness-engineering:generator-evaluator"
+name: generator-evaluator
 description: "Run a generator/evaluator harness loop for subjective-quality work where there is no binary pass/fail test. Use for UI/UX redesigns, \"make this look good\", visual design review, frontend polish passes, product-feel critique, or any multi-sprint build where \"is this actually done and correct?\" needs independent judgment. Builds an explicit scoring rubric first, then iterates with a separate evaluator agent so the model never grades its own work. Triggers on: subjective quality task, design review loop, does this look good, UX pass, redesign, avoid self-grading bias, iterate until it's good, rubric-scored iteration, contract negotiation before a sprint."
-description-short: Run a generator/evaluator harness loop for subjective-quality work with no pass/fail test. Use for UI/UX redesigns or any build where "is this actually good?" needs independent judgment.
+metadata:
+  short-description: "Run an independent generator/evaluator rubric loop for subjective-quality work without a binary test."
 ---
 
 # Generator / Evaluator Harness

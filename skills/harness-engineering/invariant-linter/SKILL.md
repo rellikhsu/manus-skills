@@ -1,7 +1,8 @@
 ---
-name: "harness-engineering:invariant-linter"
+name: invariant-linter
 description: Promote prose rules in CLAUDE.md/AGENTS.md into mechanically enforced lints, structural tests, or CI checks. Use when the user says "turn this rule into a lint", "enforce this convention mechanically", "stop agents from violating this pattern", "convert a CLAUDE.md rule into a CI check", "add an architecture/dependency-direction test", "why do agents keep ignoring this rule", or when reviewing instruction files that contain objectively checkable rules (naming conventions, forbidden APIs, layering rules, file size limits, boundary validation, structured logging).
-description-short: Promote prose rules in CLAUDE.md/AGENTS.md into mechanically enforced lints, structural tests, or CI checks. Use when a rule is checkable but only lives in docs and agents keep ignoring it.
+metadata:
+  short-description: "Turn objectively checkable prose rules into mechanical lints, structural tests, or CI checks."
 ---
 
 # Invariant Linter
