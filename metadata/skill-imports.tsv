@@ -18,6 +18,7 @@ mattpocock-skills	triage	https://github.com/mattpocock/skills/tree/main/skills/e
 mattpocock-skills	wayfinder	https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder	https://github.com/mattpocock/skills
 mattpocock-skills	wizard	https://github.com/mattpocock/skills/tree/main/skills/engineering/wizard	https://github.com/mattpocock/skills
 mattpocock-skills	claude-handoff	https://github.com/mattpocock/skills/tree/main/skills/in-progress/claude-handoff	https://github.com/mattpocock/skills
+mattpocock-skills	implement-spec	https://github.com/mattpocock/skills/tree/main/skills/in-progress/implement-spec	https://github.com/mattpocock/skills
 mattpocock-skills	loop-me	https://github.com/mattpocock/skills/tree/main/skills/in-progress/loop-me	https://github.com/mattpocock/skills
 mattpocock-skills	setup-ts-deep-modules	https://github.com/mattpocock/skills/tree/main/skills/in-progress/setup-ts-deep-modules	https://github.com/mattpocock/skills
 mattpocock-skills	writing-beats	https://github.com/mattpocock/skills/tree/main/skills/in-progress/writing-beats	https://github.com/mattpocock/skills
@@ -94,8 +95,8 @@ harness-engineering	self-harness	https://github.com/rellikhsu/harness-engineerin
 harness-engineering	which-loop	https://github.com/rellikhsu/harness-engineering/tree/main/skills/which-loop	https://github.com/rellikhsu/harness-engineering
 perplexity	alt-data-aggregator	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/alt-data-aggregator	https://www.perplexity.ai/computer/skills
 perplexity	company-comps	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/company-comps	https://www.perplexity.ai/computer/skills
-perplexity	company-initiation-report	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/company-initiation-report	https://www.perplexity.ai/computer/skills
 perplexity	company-initiation-report-private	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/company-initiation-report-private	https://www.perplexity.ai/computer/skills
+perplexity	company-initiation-report	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/company-initiation-report	https://www.perplexity.ai/computer/skills
 perplexity	competitive-landscape	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/competitive-landscape	https://www.perplexity.ai/computer/skills
 perplexity	etf-overlap	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/etf-overlap	https://www.perplexity.ai/computer/skills
 perplexity	expert-calls-analysis	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity/expert-calls-analysis	https://www.perplexity.ai/computer/skills
