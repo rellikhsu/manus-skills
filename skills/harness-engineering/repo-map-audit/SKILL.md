@@ -109,6 +109,11 @@ Common project-specific additions: `docs/testing.md`, `docs/deployment.md`,
 `docs/decisions/NNNN-*.md` (ADRs), `docs/glossary.md`.
 
 Rules for the structure:
+- An architecture map explains actual module responsibilities, allowed/forbidden
+  dependencies, state/data ownership, IO/validation boundaries, deliberate
+  absences, and the tests that support those claims. Verify against code; a valid
+  path or directory tree alone does not establish these properties. Log missing
+  or uncertain content separately rather than inventing it during a verbatim move.
 - `docs/generated/` is written by a script and never hand-edited. Say so at
   the top of each generated file.
 - `docs/exec-plans/active/` is the only place with expected high churn; moving
@@ -141,8 +146,8 @@ Only after approval.
 3. Rewrite the entry file to the map shape below.
 4. Fix inbound links: grep the repo for references to the old headings/anchors
    (`grep -rn "CLAUDE.md#" .`) and repoint them.
-5. Verify: every link in the new entry file resolves; total entry-file length
-   is at or under 120 lines (target ~100); no content vanished
+5. Verify: every link in the new entry file resolves; entry-file length meets the
+   agreed project budget (suggested target ~100, default check limit 120); no content vanished
    (`git show --stat`, and diff word counts old vs. sum of new).
 
 ### Target shape of the trimmed entry file
@@ -180,8 +185,10 @@ Constraints on the map:
 - Say *when* to read something, not just that it exists ("before adding an
   endpoint, read X") — that is what makes disclosure progressive.
 - No rule the tooling already enforces.
-- Target ~100 lines, hard cap 120 (the number `check-docs.sh` enforces). If it
-  won't fit, something in it belongs in `docs/`.
+- Target ~100 lines; the example check defaults to 120 through `MAX_LINES`.
+  Agree a different budget when the project's map remains effective, and record
+  it in the actual check configuration. Size is a diagnostic, not proof of quality;
+  do not force a split of a healthy map to meet this example's default.
 
 ## Step 5 — Propose lightweight freshness checks
 

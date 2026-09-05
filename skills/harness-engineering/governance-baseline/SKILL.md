@@ -16,6 +16,13 @@ Scope discipline: you are not building a permission framework, an RBAC system, o
 policy DSL. You are converting one "the agent could do this and nobody would notice
 until it mattered" gap into one governed action.
 
+Name both the enforcement point and who can change or bypass it. Local hooks,
+typechecks, and wrappers guard their managed execution path; they are not an
+authority boundary while the agent retains unrestricted shell/Git or config access.
+An integration gate protects its target only when its policy cannot be changed or
+bypassed by that agent. A sandbox or independent approval must sit outside the
+agent's editable controls. Invoking this skill grants no new authority.
+
 ## Step 1 — Inventory unchecked authority
 
 Fill in this table from evidence — actual tool access, actual CI/CD permissions,
@@ -82,26 +89,27 @@ In ascending order of cost — stop at the first one that actually closes the ga
 Present as:
 
 > **Gap:** the agent can force-push and nothing blocks it.
-> **Mechanism:** branch protection on `main` (already native to the host, zero new code) plus a pre-push hook that refuses `--force` outside a named escape hatch.
-> **Then true:** a force-push requires an explicit, greppable exception — not silent capability.
+> **Mechanism:** host-side branch protection on `main`, administered separately from the agent's credentials, with no bypass available to that agent.
+> **Then true:** the agent cannot force-update that protected ref. Any exception requires independently authorized policy change; a local hook is only additional feedback.
 
 Get approval before implementing — this changes what the agent (and possibly the
 human) can do; do not land it unannounced.
 
 ## Step 4 — Implement, then prove the gate holds
 
-Implement only what was approved. Then, in the same session, actually trigger the
-gated action and show it being blocked or escalated — not described, demonstrated.
-An unproven gate is not a gate.
+Implement only what was approved. In a safe fixture, demonstrate both an allowed
+action and a denied/escalated action, and check any alternate entry point the
+agent actually retains. Report the tested scope and remaining bypasses; do not
+claim a production protection from a local fixture alone.
 
-Record the new boundary where the agent will see it next time: a line in `CLAUDE.md`
-("destructive shell commands require `--confirm`; force-push is blocked outside
-`scripts/rebase-recovery.sh`"). An undocumented gate just looks like a bug the next
-session works around.
+Record the verified boundary in the project's existing agent entry point
+(`AGENTS.md`, `CLAUDE.md`, or its actual equivalent): protected action, enforcing
+mechanism, configuration owner, and approved escalation path. An undocumented
+gate can look like a bug the next session tries to work around.
 
-If the gate should be **mechanically enforced** rather than agent-remembered prose,
-hand off to `invariant-linter` — governance decides *what* must be gated;
-invariant-linter turns *that* into a check nothing can silently violate.
+Hand off checkable code or dependency rules to `invariant-linter`. Keep permission,
+credential, and approval enforcement with the host's actual governance mechanism;
+an added lint cannot remove an agent's authority.
 
 ## Worked example
 
@@ -117,23 +125,20 @@ prose inside the skill, not an enforced boundary in the repo.
 far more than intended before anyone notices, or touch CI config despite the skill
 saying not to.
 
-**Mechanism (about 20 minutes):**
-1. A `pre-commit` check that hard-fails any commit touching `.github/workflows/**`
-   from the gardening branch pattern (`gardening/*`) — makes the "never touch CI"
-   rule unbypassable rather than trusted to the model reading it correctly every time.
-2. A wrapper script `scripts/gardening-run.sh` that counts commits made in the current
-   invocation and exits non-zero past 3, so the cap is enforced by the shell, not the
-   model's arithmetic.
-3. JSONL audit line per commit (`{"run": "...", "commit": "...", "files": N, "rule": "GP-1"}`)
-   appended to `.gardening-audit.log` — closes the "what did it actually do overnight"
-   question without standing up a platform.
+**Smallest proposal depends on actual control:**
+1. A local `pre-commit` check and commit-count wrapper can provide early feedback,
+   but do not close this authority gap if raw Git/config writes remain available.
+2. If the host already supports an independently controlled action gate, validate
+   every allowed commit before it happens, deny workflow-file changes, and reject
+   the fourth commit before side effects. The agent must not control that gate or
+   its counter. If this cannot be enforced, retain human approval for committing.
+3. Record one JSONL audit event per attempted governed action. Keep audit storage
+   outside agent control if tamper resistance is part of the requirement.
 
-**Proven live:** ran the wrapper against a scripted 4th commit — script exited 1 with
-`gardening cap reached (3/3)`, no commit made. Attempted a workflow-file edit on a
-`gardening/*` branch — pre-commit rejected it with the rule name.
-
-**Recorded in `CLAUDE.md`:** the commit cap, the CI-file block, and the audit log
-location.
+**Verification to perform:** an allowed fixture commit succeeds; a workflow change
+and a fourth commit are rejected without creating a commit. Check whether direct
+Git/config access still bypasses the mechanism. Record failures as an open gap,
+not as a proven boundary.
 
 ## Anti-patterns
 
@@ -141,8 +146,10 @@ location.
   access and no secrets in scope.
 - Gating everything, so approval prompts become routine and stop getting read.
 - A rule that lives only as prose in `CLAUDE.md` with no mechanical backing — that is
-  a preference, not a governed boundary; hand it to `invariant-linter` if it should be
-  more than a suggestion.
+  a stated requirement, not a proven boundary. Choose code checks or actual
+  permission controls according to what it constrains.
+- Calling a local hook or wrapper unbypassable while the agent controls alternate
+  commands or the enforcing configuration.
 - Treating a log as a gate. Audit trails answer "what happened"; they do not stop
   anything on their own.
 - Standing up a full audit platform when one JSONL file and `jq` answers every

@@ -7,8 +7,9 @@ metadata:
 
 # Invariant Linter
 
-Prose rules get forgotten. A failing check cannot be. Convert instruction-file rules
-into mechanical enforcement, and write the error message so it teaches the fix inline.
+Convert checkable instruction-file rules into executable feedback, and write the
+error message so it teaches the fix inline. A failing check only guards paths
+where it runs; it does not itself remove permissions or prevent bypass.
 
 Guiding principle: **enforce boundaries centrally, allow autonomy locally.** Enforce
 *that* data is validated at the boundary; do not dictate *which* library does it.
@@ -60,12 +61,18 @@ Pick the cheapest thing that actually fails a build. In ascending order of cost:
 | ESLint/Biome present | `no-restricted-imports`, `no-restricted-syntax`, `no-restricted-globals` first; a custom rule only if selectors cannot express it |
 | Python | ruff `flake8-tidy-imports` banned-api / custom `ast`-walking test under `tests/test_architecture.py` |
 | Layering rules | Structural test that parses imports and asserts the allowed edge set |
-| Type-level rules | tsconfig strictness, `--strict`, mypy config — free and unbypassable |
+| Type-level rules | Existing tsconfig strictness / mypy settings; account for migration cost and allowed exceptions |
 
 Rules:
 - Prefer configuring an existing linter over writing a new one.
 - Never introduce a new framework when a 20-line script suffices.
 - Every check must run in CI *and* be runnable locally with one documented command.
+- Prove the supported boundary with an allowed fixture that passes and a violating
+  fixture that fails; run the normal project checks too. Document what the check
+  cannot detect. Syntax matching is not proof of all runtime validation.
+- A required CI gate only blocks integration if the agent cannot alter or bypass
+  that gate. Route authority or permission gaps to `governance-baseline` instead
+  of claiming a local check is a security boundary.
 - Provide an explicit, greppable escape hatch so legitimate exceptions are visible
   rather than silently disabling the rule. Use the mechanism's own native one where it
   exists — ESLint `// eslint-disable-next-line <rule> -- <reason>`, ruff `# noqa: <code>`

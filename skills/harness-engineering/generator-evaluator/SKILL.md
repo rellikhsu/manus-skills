@@ -22,7 +22,7 @@ Start with the simplest harness that could work. Do **not** default to the heavy
 
 | Situation | Harness |
 |---|---|
-| Objectively checkable (tests pass, types compile, output matches spec, script runs) | **No harness.** Just do it and run the check. Say so and skip the ceremony. |
+| Objectively checkable (tests pass, types compile, output matches spec, script runs) | **No generator/evaluator loop.** Do the authorized work and run the objective check; tests and tools still form part of the harness. |
 | Single subjective artifact (one page, one component, one doc) | Rubric + generator + independent evaluator, 5–10 rounds |
 | Large multi-step build (full app, several features) | Add sprint structure + **contract negotiation** (Step 5), 10–15 rounds |
 
