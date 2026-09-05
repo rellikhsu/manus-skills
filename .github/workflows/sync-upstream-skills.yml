@@ -19,6 +19,8 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - name: Test dist conversion contracts
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
       - name: Sync upstream skills (main)
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
