@@ -1,18 +1,20 @@
 ---
 name: generator-evaluator
-description: "Run a generator/evaluator harness loop for subjective-quality work where there is no binary pass/fail test. Use for UI/UX redesigns, \"make this look good\", visual design review, frontend polish passes, product-feel critique, or any multi-sprint build where \"is this actually done and correct?\" needs independent judgment. Builds an explicit scoring rubric first, then iterates with a separate evaluator agent so the model never grades its own work. Triggers on: subjective quality task, design review loop, does this look good, UX pass, redesign, avoid self-grading bias, iterate until it's good, rubric-scored iteration, contract negotiation before a sprint."
+description: "Run a generator/evaluator harness loop for subjective acceptance criteria that objective checks do not fully cover, including mixed correctness/UX tasks. Use for UI/UX redesigns, \"make this look good\", visual design review, frontend polish passes, product-feel critique, or any multi-sprint build where \"is this actually done and correct?\" needs independent judgment. Builds an explicit scoring rubric first, then iterates with a separate evaluator agent so the model never grades its own work. Triggers on: subjective quality task, design review loop, does this look good, UX pass, redesign, avoid self-grading bias, iterate until it's good, rubric-scored iteration, contract negotiation before a sprint."
 metadata:
-  short-description: "Run an independent generator/evaluator rubric loop for subjective-quality work without a binary test."
+  short-description: "Run an independent generator/evaluator rubric loop for subjective criteria not fully covered by objective checks, including mixed correctness/UX tasks."
 ---
 
 # Generator / Evaluator Harness
 
 Two failure modes make naive single-agent execution unreliable on subjective work:
 
-- **Context anxiety** — a long-running agent winds work down prematurely as it nears its perceived context limit. Fix with context *reset*, not compression: a fresh context plus the evaluator's written feedback beats a summarized history that drags stale framing forward.
+- **Context anxiety** — some models wind work down prematurely as context fills. A reset with a structured handoff can help when compaction does not; whether it is needed depends on the model and task. Measure before imposing it on every round.
 - **Self-evaluation bias** — a model grading its own output is systematically optimistic, worst on subjective dimensions (design quality, UX, "does this feel right"). Fix by making the evaluator a **separate agent invocation with its own context**, prompted to critique.
 
-Everything below follows from those two.
+Source: Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), especially “Frontend design”, “The architecture”, and “Running the harness”. That harness removed resets with Opus 4.5 while retaining separate roles and automatic compaction. Role isolation and context lifetime are separate choices.
+
+**Local adaptation:** this skill specializes in subjective acceptance criteria. Rubric weights, floors, round caps, plateau thresholds, and viewport sizes below are adjustable starting points, not universal values from the article.
 
 ---
 
@@ -22,11 +24,12 @@ Start with the simplest harness that could work. Do **not** default to the heavy
 
 | Situation | Harness |
 |---|---|
-| Objectively checkable (tests pass, types compile, output matches spec, script runs) | **No generator/evaluator loop.** Do the authorized work and run the objective check; tests and tools still form part of the harness. |
+| Trusted objective checks cover every acceptance criterion | Use those checks; a subjective rubric loop adds no uncovered criterion. |
+| Mixed task: tests cover correctness, but UX/design still needs judgment | Run objective checks and use the independent evaluator for the remaining subjective criteria. |
 | Single subjective artifact (one page, one component, one doc) | Rubric + generator + independent evaluator, 5–10 rounds |
 | Large multi-step build (full app, several features) | Add sprint structure + **contract negotiation** (Step 5), 10–15 rounds |
 
-If the user asked for the loop but the task is objectively checkable, tell them plainly: "This has a real pass/fail check (`npm test`); a rubric loop would add cost without adding signal." Then just do the work.
+The existence of `npm test` alone does not establish complete coverage. Map checks to the actual acceptance criteria. Skip this subjective loop only when trusted checks cover them all; honor an explicit request for additional independent review.
 
 ---
 
@@ -73,26 +76,36 @@ For full-stack sprint work, swap in: Product Depth / Functionality / Visual Desi
 
 ---
 
-## Step 2 — Spawn the generator
+### Calibrate the evaluator
 
-Use the host's subagent API to launch a **fresh generator context** with: the task, the **full rubric text**, and (from round 2 on) the evaluator's written feedback verbatim. In Codex, use its multi-agent execution to spawn an independent subagent; in another host, use that host's equivalent fresh-context subagent call.
+Before relying on scores, trial the evaluator on a few actual samples with known human judgments, including a clear pass and a clear failure. Compare its reasons and scores with those judgments; inspect evaluator logs and adjust its prompt or rubric when it is lenient, inconsistent, or rewards the wrong qualities. Rerun the samples after an adjustment. Keep samples and judgments isolated from generator reasoning.
+
+Record the rubric version and calibration evidence. If human reference judgments are unavailable, label scores uncalibrated and do not report rubric passage as validated alignment with user preferences. A changed rubric starts a new scoring series: re-score the comparison artifacts before using a trajectory or plateau rule.
+
+### Choose each role's context lifetime
+
+Start separate generator and evaluator sessions. Each may retain its own session across rounds with host compaction. Reset a role when observed context anxiety or drift persists, or when a controlled comparison supports resetting. Record the reason; use `harness-retune` after model changes. If the host cannot resume subagents, use fresh calls as a host constraint, not as a source requirement. A generator handoff carries the task, rubric, current artifact/state, open work, and evaluator feedback; an evaluator handoff carries only its evaluation contract, calibration, and prior findings.
+
+## Step 2 — Run the generator
+
+Use the host's subagent API to start the generator with the task and **full rubric text**. From round 2, resume its own session or use the reset policy above, supplying the evaluator's written feedback verbatim and the current artifact/state. In Codex, use its multi-agent execution; in another host, use the equivalent subagent API.
 
 You are the orchestrator. Do **not** write the artifact yourself in this context — if you generate it here, you have no clean context left to evaluate from.
 
 - Give it the rubric up front — it should build *toward* the criteria, not be surprised by them.
 - Ask it to end its run with a short "what I changed and where" note, plus how to run/see the result (URL, command). The evaluator needs this.
 - Do **not** ask the generator to score itself. A self-score anchors the evaluator if it leaks into the next context.
-- **Never reuse the generator's context across rounds.** New round = new subagent, seeded with the original task + rubric + latest feedback. This is the context-anxiety fix.
+- Keep the generator in its own role across rounds. Reset only under the chosen context policy, carrying a sufficient handoff rather than assuming feedback alone reconstructs the work.
 
 ---
 
 ## Step 3 — Spawn an independent evaluator
 
-A **separate subagent invocation** — a second, brand-new context, never a continuation of the generator. Concretely:
+Start a **separate evaluator session**, never a continuation of the generator. On later rounds, it may resume its own evaluation session under the chosen context policy. Concretely:
 
-- Start a new subagent. **Do not** send follow-up instructions to the generator, and do not ask it to "now switch hats and critique". Both keep the generator's context and reproduce exactly the self-evaluation bias this skill exists to remove.
+- Use the independent evaluator, or replace it if a reset is warranted. **Do not** ask the generator to "now switch hats and critique"; that retains the generator's context and reproduces the self-evaluation bias this skill exists to remove.
 - Do not evaluate in *your own* orchestrator context either — you saw the generator's plan and report, so you are contaminated too. Your job is to pass the rubric and artifact pointer in, and read the scores out.
-- The evaluator prompt contains only: the rubric verbatim, the original user requirements, how to reach the artifact (path / URL / command), and the required output format. It must not contain the generator's reasoning, rationale, self-assessment, or "what I changed" narrative beyond the bare pointer to where the artifact is.
+- The evaluator receives only evaluation inputs: the rubric verbatim, human calibration samples/judgments when available, the original user requirements, how to reach the current artifact (path / URL / command), its prior findings, and the required output format. It must not contain the generator's reasoning, rationale, self-assessment, or "what I changed" narrative beyond the bare pointer to where the artifact is.
 
 For UI targets, the evaluator must *drive the real thing*:
 
@@ -103,6 +116,10 @@ For UI targets, the evaluator must *drive the real thing*:
 Evaluator output format — enforce this:
 
 ```markdown
+### Objective checks
+Artifact revision: <revision/hash>
+Required checks: <commands and pass/fail evidence, or none required>
+
 ### Scores
 | Dimension | Score | Floor | Pass |
 |---|---|---|---|
@@ -129,11 +146,11 @@ A bare number is a useless round. Every deduction must name a location and a con
 
 Default cap: **5–15 rounds** (5 for one component, 10–15 for a full build). Let the user override.
 
-Each round: fresh generator (task + rubric + feedback) → fresh evaluator → record the score line in a running log.
+Each round: generator revision → run required objective checks → independent evaluator checks that same artifact → record check results, scores, rubric version, and context-policy decisions. Resume or reset each role according to Step 1; role isolation remains required in either mode.
 
 Stop early when:
 
-- Pass condition met (total ≥ target **and** every floor cleared), or
+- Pass condition met: all required objective checks pass on the evaluated artifact revision **and** total ≥ target **and** every floor cleared. A failing or unrun required check blocks acceptance regardless of rubric scores; later edits require fresh checks. Or
 - **Plateau**: weighted total moves < 0.3 across two consecutive rounds, or the same blocking issue survives two rounds. Stop and report — don't burn the remaining budget. A plateau usually means a bad rubric criterion, a missing capability (evaluator can't actually reach the feature), or a genuine design tradeoff needing a human call. Say which you think it is.
 - Score *regresses* two rounds running — revert to the best-scoring revision and report.
 
@@ -160,7 +177,7 @@ Optionally add a **Planner** ahead of all this: expand a one-line prompt into a 
 
 **0. Warranted?** Yes — "make the settings page not feel like a form dump" has no test.
 
-**1. Rubric.** The four dimensions above, with Function's task list pinned to this page: change theme, update email with validation, toggle notifications, delete account behind a confirm.
+**1. Rubric and calibration.** Pin Function to this page: change theme, update email with validation, toggle notifications, delete account behind a confirm. Trial the rubric on user-rated pass/fail samples; correct evaluator leniency before trusting its scores.
 
 **2. Round 1 generator.** Subagent gets the rubric + `src/pages/Settings.tsx`. Rebuilds with grouped sections, a real type scale, sticky save bar. Reports: "run `npm run dev`, open /settings".
 
@@ -171,15 +188,16 @@ Optionally add a **Planner** ahead of all this: expand a one-line prompt into a 
 - Function **6** (floor 8) — invalid email shows no error, submits anyway; delete-account confirm has no cancel.
 - Total 6.0 — **FAIL**, three floors missed. Do not regress: the sticky save bar and the grouping.
 
-**4. Round 2.** *Fresh* generator context: original task + rubric + that feedback verbatim. Fixes hierarchy, contrast, mobile padding, email validation, cancel button. → 8.4, all floors cleared. **Pass in 2 rounds.** Report trajectory 6.0 → 8.4 and the diff.
+**4. Round 2.** Resume the generator's own session with that feedback verbatim, or reset with the structured handoff if the chosen policy calls for it. Fixes hierarchy, contrast, mobile padding, email validation, cancel button. → 8.4, all floors cleared. **Pass in 2 rounds.** Report trajectory 6.0 → 8.4 and the diff.
 
 ---
 
 ## Anti-patterns
 
-- Evaluating in the generator's own context — including sending follow-up instructions to the generator to "now review your work", or an orchestrator that generated the artifact then grades it. That is self-review; it defeats the entire skill. The evaluator is always a fresh subagent invocation.
-- Summarizing a long generator history into the next round instead of resetting. Carry the *feedback*, not the transcript.
+- Evaluating in the generator's own context — including sending follow-up instructions to the generator to "now review your work", or an orchestrator that generated the artifact then grades it. That is self-review; it defeats the entire skill. The evaluator always has a separate role and context from the generator; it can retain its own evaluation history.
+- Treating resets as mandatory for every model, or continuing a drifting session despite evidence that compaction is insufficient. Keep generator reasoning out of the evaluator in either mode.
+- Trusting uncalibrated scores as proof of user preference, or comparing scores across rubric changes without re-scoring the artifacts.
 - Score-only feedback with no locations or target states.
 - Rubrics of vague superlatives — they converge every run onto the same look.
 - Averaging without floors, so one broken dimension hides.
-- Running the full 15 rounds on a task that had a real test all along.
+- Running subjective scoring when trusted objective checks already cover every criterion, or skipping UX evaluation merely because some tests exist.

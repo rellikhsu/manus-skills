@@ -19,6 +19,13 @@ should produce a handful of one-minute-reviewable changes, or nothing at all.
 - Use the host's recurring-task facility, CI cron, or another daily/weekly scheduler.
 - ad hoc is fine, but if you find yourself running it ad hoc repeatedly, set up a schedule instead.
 
+**Source and local policy:** [OpenAI's harness-engineering article](https://openai.com/index/harness-engineering/)
+supports continuous small cleanup and also describes automatic merges. This
+skill's 40-file scan limit, 5-file/100-line change cap, three-commit cap, and
+no-automerge rule are conservative local policies, not numbers or prohibitions
+from that article. Explicit project/user policy can adjust them within existing
+authority; a gardening run must not grant itself broader permissions.
+
 ## Step 0 — Ensure golden principles exist
 
 Look for `docs/GOLDEN_PRINCIPLES.md` (also accept `GOLDEN_PRINCIPLES.md`,

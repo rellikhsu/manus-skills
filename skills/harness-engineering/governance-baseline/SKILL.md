@@ -73,9 +73,12 @@ In ascending order of cost — stop at the first one that actually closes the ga
 2. **Human-in-the-loop hook on a specific action class.** Not "approve everything" —
    name the class (destructive commands, spend over $X, prod deploy, anything touching
    auth/payments/migrations) and gate only that. Frequent, low-stakes approval prompts
-   train reflexive clicking, not scrutiny — a mobile-permissions study found only 17%
-   of users even read the prompt and 3% could answer comprehension questions about
-   what they'd granted. Gate rarely, on real stakes.
+   train reflexive clicking, not scrutiny. A
+   [2012 Android permissions study](https://research.google/pubs/android-permissions-user-attention-comprehension-and-behavior/)
+   reported that 17% paid attention to permissions and 3% of online-survey
+   respondents answered all three comprehension questions correctly. This is an
+   analogy informing the design, not a measurement of today's agent users.
+   Gate rarely, on real stakes.
 3. **Structured audit trail.** One JSONL line per governed action: what tool, what
    args, what risk class, what result. This is `observability-bridge`'s territory if
    the project doesn't have queryable logs yet — chain to it rather than duplicating.

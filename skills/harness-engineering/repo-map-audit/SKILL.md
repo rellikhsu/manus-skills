@@ -114,6 +114,12 @@ Rules for the structure:
   absences, and the tests that support those claims. Verify against code; a valid
   path or directory tree alone does not establish these properties. Log missing
   or uncertain content separately rather than inventing it during a verbatim move.
+- After the module map, document relevant cross-cutting concerns in a separate
+  section: error handling, cancellation, authorization, observability, and other
+  policies spanning modules. State ownership and evidence; omit inapplicable
+  topics rather than copying another project's architecture. This follows
+  [matklad's ARCHITECTURE.md guidance](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html)
+  and the [rust-analyzer example](https://github.com/rust-lang/rust-analyzer/blob/d7c99931d05e3723d878bea5dc26766791fa4e69/docs/dev/architecture.md#cross-cutting-concerns).
 - `docs/generated/` is written by a script and never hand-edited. Say so at
   the top of each generated file.
 - `docs/exec-plans/active/` is the only place with expected high churn; moving

@@ -13,6 +13,10 @@ Guiding principle: *find the simplest solution, only adding complexity when need
 
 Retuning goes **both directions**: some scaffolding becomes removable, and some newly ambitious harness patterns become viable. Do not treat this as a cleanup-only exercise.
 
+Sources: Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), “Iterating on the harness” and “Removing the sprint construct”; the prediction/verification record adapts [AHE v4 §3.3](https://arxiv.org/html/2604.25850v4#S3.SS3).
+
+**Local defaults:** the task count, cadence, and record format below are operational choices. Set them to fit the actual model upgrade and evaluation budget; do not treat them as experimentally established universal thresholds.
+
 ## Step 1 — Inventory the scaffolding
 
 Read the workflow definition: skill/subagent files, orchestration code, prompt templates, CI glue, exec-plan docs, CLAUDE.md rules. Build a table with one row per **structural step that exists to compensate for a model limitation**, not per feature. Typical candidates:
@@ -42,9 +46,9 @@ Do it properly:
 
 1. Pick 2–3 representative tasks, including the hardest one the harness is expected to survive.
 2. Fix everything else: same prompt, same repo state, same tools, same model.
-3. **Before running anything, write down a one-line falsifiable prediction**: what you expect the ablated variant to do relative to baseline, and why ("removing per-sprint QA: no quality delta on tasks under ~8 files, drifts on the largest one — the model's coherent runtime should cover the smaller tasks but not the biggest"). This is what turns the ablation into a test of a stated belief instead of a fishing expedition, and it is what Step 3 scores against, not just the raw numbers. Skipping this and judging post-hoc is how "the model seems better now" sneaks back in as a conclusion.
+3. **Before running anything, write down a one-line falsifiable prediction**: what you expect the ablated variant to do relative to baseline, and why ("removing per-sprint QA: no quality delta on tasks under ~8 files, drifts on the largest one — the model's coherent runtime should cover the smaller tasks but not the biggest"). This makes the belief testable. Step 3 records whether it held separately from whether the variant met the predeclared acceptance criteria. Skipping this and judging post-hoc is how "the model seems better now" sneaks back in as a conclusion.
 4. Run baseline and ablated variants. More than one run each where output is stochastic and budget allows.
-5. Score against criteria decided **before** running — e.g. tests passing, requirements met, architectural coherence at the end of the run, drift/regression in later stages, hallucinated APIs, human-fix minutes. Also record cost and wall-clock. Then compare the outcome against the prediction from step 3: did it hold, or was the hypothesis wrong? A wrong prediction that still gets called a win is a sign the criteria in step 5 were chosen after the fact — redo the call honestly.
+5. Score against criteria decided **before** running — e.g. tests passing, requirements met, architectural coherence at the end of the run, drift/regression in later stages, hallucinated APIs, human-fix minutes. Also record cost and wall-clock. Then compare the outcome against the prediction from step 3: did it hold, or was the hypothesis wrong? Record prediction accuracy separately from acceptance: an unexpected improvement may still meet every predeclared criterion. Challenge post-hoc scoring only when the criteria actually changed; do not infer it from a prediction miss.
 
 If running both is genuinely infeasible, degrade honestly to reasoned analysis and **label it as such**: state the original failure mode, state what the current model is documented to do (coherent runtime, context window, self-critique quality, instruction adherence), and judge whether the failure mode still plausibly applies. Mark the recommendation as unverified and lower-confidence. Never present reasoning as if it were a measurement.
 
@@ -87,7 +91,7 @@ This record is the baseline for the next retune. Without it, every upgrade resta
 
 Say this explicitly to the user: **revisit the harness every time a notable new model ships.** Scaffolding accretes silently and never removes itself. Recommend a standing trigger — a checklist item on model-upgrade, a scheduled review, or a note in the workflow's README pointing at the last retune record.
 
-## Worked example (generic pattern)
+## Worked example (hypothetical; numbers are not source measurements)
 
 A full-stack build harness on the previous model needed: (a) work split into small sprints to stay coherent, and (b) a QA/evaluator pass after *every* sprint, because the model drifted from the spec over long runs and could not reliably critique its own output.
 

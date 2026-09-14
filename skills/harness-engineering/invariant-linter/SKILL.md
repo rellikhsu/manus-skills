@@ -117,33 +117,30 @@ Good:
 
 Prose in CLAUDE.md: *"Don't probe request data YOLO-style; validate at the boundary."*
 
-ESLint (`eslint.config.js`), library-agnostic — bans the unsafe access, not the tool:
+One project-specific option is to put request decoding in `src/api/boundary/`.
+Handlers call those adapters and use their validated return values. Adapt the path
+and request identifier to the actual project; this directory is a local convention,
+not a required architecture or validation library from the source article.
+
+Add this entry to the project's existing ESLint flat config, retaining its
+TypeScript parser/settings. It limits direct raw reads outside that boundary:
 
 ```js
 {
   files: ['src/api/**/*.ts'],
+  ignores: ['src/api/boundary/**'],
   rules: {
     'no-restricted-syntax': [
       'error',
       {
-        // Flags `req.body` etc. everywhere EXCEPT as the direct operand of a
-        // parse/safeParse/validate call, which is the validation itself.
         selector:
-          "MemberExpression[computed=false][object.name='req'][property.name=/^(body|query|params)$/]" +
-          ":not(CallExpression[callee.property.name=/^(parse|safeParse|validate)$/] > MemberExpression)",
+          "MemberExpression[object.name='req'][computed=false][property.name=/^(body|query|params)$/], " +
+          "MemberExpression[object.name='req'][computed=true][property.value=/^(body|query|params)$/]",
         message: [
-          '[boundary-validation] Raw access to req.body/query/params.',
-          '',
-          'Unvalidated request data reaches the service layer and fails deep in the',
-          'stack with an unactionable error. Parse the shape here instead.',
-          '',
-          'Fix: define a schema next to the handler and parse once at the top:',
-          '  const CreateOrderInput = z.object({ sku: z.string(), qty: z.number().int().positive() });',
-          '  const input = CreateOrderInput.parse(req.body);',
-          '',
-          'Any parser is fine (zod, valibot, hand-written type guard) as long as the',
-          'handler body only sees a typed value.',
-          '',
+          '[boundary-validation] Direct raw request access outside the boundary adapter.',
+          'Keep decoding in src/api/boundary/ so handlers consume validated values.',
+          'Fix: call an adapter such as readCreateOrder(req), validate inside it,',
+          'and return the checked value. Any validator library or custom guard can be used there.',
           'Intentional exception? // eslint-disable-next-line no-restricted-syntax -- <reason>',
         ].join('\n'),
       },
@@ -152,8 +149,24 @@ ESLint (`eslint.config.js`), library-agnostic — bans the unsafe access, not th
 }
 ```
 
-Then delete the prose rule from CLAUDE.md and replace with one line:
-`Boundary validation is enforced by the boundary-validation lint; see its error message.`
+Inside a boundary adapter, `schema.parse(req.body)`, Valibot's
+`parse(schema, req.body)`, and a custom guard are all permitted. The adapter must
+actually validate, reject invalid inputs, and return a checked value; test that
+runtime contract. A handler uses `const input = readCreateOrder(req)` rather than
+reading raw fields, regardless of the adapter's validator choice.
+
+**What this proves:** direct `req.body/query/params` and literal bracket reads are
+restricted to the declared directory. It does not prove the adapter validates,
+track aliases/destructuring/dynamic keys, or infer trust from a function named
+`parse`. Add checks for those forms only when required by the project's threat
+model; do not describe this syntax rule alone as complete validation enforcement.
+
+Verify allowed boundary calls for method, named-import, and custom validators;
+verify raw handler reads fail, adapter calls pass, and the native escape hatch
+works. Keep these fixtures in the target project's tests. After both lint
+fixtures and adapter runtime tests pass, replace
+the prose rule with a precise pointer:
+`Direct raw request reads are restricted by lint to boundary adapters; adapter tests verify validation.`
 
 ### Example B — "Use structured logging" (Python, no linter infra)
 
