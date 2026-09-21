@@ -20,6 +20,7 @@ mattpocock-skills	wizard	https://github.com/mattpocock/skills/tree/main/skills/e
 mattpocock-skills	claude-handoff	https://github.com/mattpocock/skills/tree/main/skills/in-progress/claude-handoff	https://github.com/mattpocock/skills
 mattpocock-skills	implement-spec	https://github.com/mattpocock/skills/tree/main/skills/in-progress/implement-spec	https://github.com/mattpocock/skills
 mattpocock-skills	loop-me	https://github.com/mattpocock/skills/tree/main/skills/in-progress/loop-me	https://github.com/mattpocock/skills
+mattpocock-skills	pr	https://github.com/mattpocock/skills/tree/main/skills/in-progress/pr	https://github.com/mattpocock/skills
 mattpocock-skills	retro	https://github.com/mattpocock/skills/tree/main/skills/in-progress/retro	https://github.com/mattpocock/skills
 mattpocock-skills	setup-ts-deep-modules	https://github.com/mattpocock/skills/tree/main/skills/in-progress/setup-ts-deep-modules	https://github.com/mattpocock/skills
 mattpocock-skills	writing-beats	https://github.com/mattpocock/skills/tree/main/skills/in-progress/writing-beats	https://github.com/mattpocock/skills
@@ -71,6 +72,7 @@ aws	planning	https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemake
 aws	sdk-getting-started	https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemaker-ai/skills/sdk-getting-started	https://github.com/awslabs/agent-plugins
 aws	use-case-specification	https://github.com/awslabs/agent-plugins/tree/main/plugins/sagemaker-ai/skills/use-case-specification	https://github.com/awslabs/agent-plugins
 superpowers	brainstorming	https://github.com/obra/superpowers/tree/main/skills/brainstorming	https://github.com/obra/superpowers
+superpowers	diagnosing-superpowers	https://github.com/obra/superpowers/tree/main/skills/diagnosing-superpowers	https://github.com/obra/superpowers
 superpowers	dispatching-parallel-agents	https://github.com/obra/superpowers/tree/main/skills/dispatching-parallel-agents	https://github.com/obra/superpowers
 superpowers	executing-plans	https://github.com/obra/superpowers/tree/main/skills/executing-plans	https://github.com/obra/superpowers
 superpowers	finishing-a-development-branch	https://github.com/obra/superpowers/tree/main/skills/finishing-a-development-branch	https://github.com/obra/superpowers
