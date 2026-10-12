@@ -1,5 +1,5 @@
 ---
-name: api-gateway
+name: "aws:api-gateway"
 description: >
   Build, manage, and operate APIs with Amazon API Gateway (REST, HTTP, and WebSocket).
   Triggers on phrases like: API Gateway, REST API, HTTP API, WebSocket API, custom domain, Lambda authorizer, usage plan, throttling, CORS, VPC link, private API.

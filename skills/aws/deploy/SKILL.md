@@ -1,5 +1,5 @@
 ---
-name: deploy
+name: "aws:deploy"
 description: "Deploy applications to AWS. Triggers on phrases like: deploy to AWS, host on AWS, run this on AWS, AWS architecture, estimate AWS cost, generate infrastructure. Analyzes any codebase and deploys to optimal AWS services."
 ---
 

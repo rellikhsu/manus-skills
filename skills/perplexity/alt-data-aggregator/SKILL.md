@@ -1,5 +1,5 @@
 ---
-name: alt-data-aggregator
+name: "perplexity:alt-data-aggregator"
 description: "Enter a ticker and get a consolidated alternative-data read from Carbon Arc for the company, its industry, and its closest comps. Pulls every relevant Carbon Arc signal available for the names (transactions, demand, digital engagement, hiring and more), benchmarks the target's trajectory against industry and comp-set trends, reconciles alt-data signals against reported KPIs and consensus expectations, and flags divergences that may signal inflections before they appear in reported results. Exhibit-led output with dated, source-attributed series."
 metadata:
   owners: [daniel-wang-pplx]

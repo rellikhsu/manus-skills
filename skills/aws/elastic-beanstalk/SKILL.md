@@ -1,5 +1,5 @@
 ---
-name: elastic-beanstalk
+name: "aws:elastic-beanstalk"
 description: "Deploy to AWS Elastic Beanstalk, in either Beanstalk Standard mode (EC2) or Beanstalk Cluster mode (managed EKS). Triggers on: elastic beanstalk, EB, beanstalk standard, beanstalk cluster, managed EC2 platform, web app with managed patching, worker on EC2, Heroku alternative, don't want to manage servers or container orchestration, migrate from Heroku, managed operational lifecycle, containerised app without operating Kubernetes, several services sharing a managed cluster, managed EKS without kubectl. Covers web and worker applications on EC2, and containerised single- and multi-service applications on managed EKS."
 ---
 

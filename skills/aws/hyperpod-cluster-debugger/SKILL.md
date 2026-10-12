@@ -1,5 +1,5 @@
 ---
-name: hyperpod-cluster-debugger
+name: "aws:hyperpod-cluster-debugger"
 description: Diagnose and remediate cluster-wide HyperPod (EKS or Slurm) problems — creation / deployment failures (CloudFormation, EFA health check, lifecycle scripts, capacity), EKS access, node replacement, CloudFormation nested-stack errors, post-maintenance rollback state, dangling nodes, autoscaler conflicts. Includes `--validate` pre-flight. Read-only.
 metadata:
   version: "0.0.1"

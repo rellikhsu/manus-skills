@@ -1,5 +1,5 @@
 ---
-name: industry-overview
+name: "perplexity:industry-overview"
 description: "Build an investor-ready industry overview deck covering market definition, segmentation, sizing, profit pools, value chain, growth drivers, cyclicality, regulation, economics, and investor implications."
 metadata:
   perplexity:

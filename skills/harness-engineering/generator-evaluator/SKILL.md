@@ -1,5 +1,5 @@
 ---
-name: generator-evaluator
+name: "harness-engineering:generator-evaluator"
 description: "Run a generator/evaluator harness loop for subjective acceptance criteria that objective checks do not fully cover, including mixed correctness/UX tasks. Use for UI/UX redesigns, \"make this look good\", visual design review, frontend polish passes, product-feel critique, or any multi-sprint build where \"is this actually done and correct?\" needs independent judgment. Builds an explicit scoring rubric first, then iterates with a separate evaluator agent so the model never grades its own work. Triggers on: subjective quality task, design review loop, does this look good, UX pass, redesign, avoid self-grading bias, iterate until it's good, rubric-scored iteration, contract negotiation before a sprint."
 metadata:
   short-description: "Run an independent generator/evaluator rubric loop for subjective criteria not fully covered by objective checks, including mixed correctness/UX tasks."
