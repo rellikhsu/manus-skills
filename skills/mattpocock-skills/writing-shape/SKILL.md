@@ -1,8 +1,7 @@
 ---
 name: writing-shape
-description: 'Writing, exploit: shape raw material into an article, paragraph by paragraph.'
-metadata:
-  disable-model-invocation: true
+description: "Writing, exploit: shape raw material into an article, paragraph by paragraph."
+disable-model-invocation: true
 ---
 
 <what-to-do>
