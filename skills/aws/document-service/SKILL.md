@@ -1,5 +1,5 @@
 ---
-name: document-service
+name: "aws:document-service"
 description: "This skill should be used when the user asks to \"analyze this codebase\", \"document this service\", \"generate technical docs\", \"I inherited this code\", \"help me understand this system\", \"create docs for this project\", \"what does this system look like\", \"onboard me to this codebase\", \"this codebase has no docs\", \"visualize the architecture from code\", or any explicit request to produce structured documentation or architecture diagrams from an existing codebase. Specifically optimized for AWS workloads (CDK, CloudFormation, Terraform) with source-of-truth citations. Do NOT activate for code reviews, single-function explanations, generating new code, or general coding tasks."
 license: Apache-2.0
 ---

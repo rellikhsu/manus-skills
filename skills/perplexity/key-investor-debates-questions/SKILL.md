@@ -1,5 +1,5 @@
 ---
-name: key-investor-debates-questions
+name: "perplexity:key-investor-debates-questions"
 description: "Identify the highest-sensitivity investor debates for a public company, map bull/base/bear and disconfirming evidence, quantify KPI and valuation impact, summarize the last 8 quarters of sentiment/setup, and generate specific management questions for public Q&A and private 1:1 meetings."
 metadata:
   perplexity:

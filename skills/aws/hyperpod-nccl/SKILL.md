@@ -1,5 +1,5 @@
 ---
-name: hyperpod-nccl
+name: "aws:hyperpod-nccl"
 description: Diagnose NCCL failures and adjacent training-pod failures on HyperPod GPU clusters (EKS or Slurm) — training hangs, AllReduce / collective-op timeouts, EFA or libfabric errors, rendezvous failures, EFA TCP fallback, /dev/shm or memlock issues, NCCL version mismatch across pods, container OOM / exit-137 / OOMKilled, GPU OOM (CUDA out of memory), CrashLoopBackOff / Pending pods, MASTER_ADDR DNS, NetworkPolicy blocking. Not for single-node hardware faults (→ hyperpod-node-debugger § G) or cluster-creation EFA / SSM failures (→ hyperpod-cluster-debugger § A / § F).
 metadata:
   version: "0.0.1"

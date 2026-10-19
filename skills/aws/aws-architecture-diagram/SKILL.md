@@ -1,5 +1,5 @@
 ---
-name: aws-architecture-diagram
+name: "aws:aws-architecture-diagram"
 description: "Generate validated AWS architecture diagrams as draw.io XML using official AWS4 icon libraries. Use this skill whenever the user wants to create, generate, or design AWS architecture diagrams, cloud infrastructure diagrams, or system design visuals. Also triggers for requests to visualize existing infrastructure from CloudFormation, CDK, or Terraform code. Supports two modes: analyze an existing codebase to auto-generate diagrams, or brainstorm interactively from scratch. Exports .drawio files with optional PNG/SVG/PDF export via draw.io desktop CLI."
 argument-hint: "[describe your architecture or say 'analyze' to scan codebase]"
 allowed-tools: Bash, Write, Read, Glob, Grep

@@ -1,5 +1,5 @@
 ---
-name: expert-calls-analysis
+name: "perplexity:expert-calls-analysis"
 description: "Surfaces and synthesizes recent Guidepoint expert-call transcripts for a target company and its comps. Identifies the most relevant interviews (customers, competitors, channel partners, former employees), extracts quote-backed themes on demand, pricing, competitive dynamics and execution, separates corroborated signal from single-source anecdote, tracks how expert tone has shifted across quarters, and maps findings to the target's KPIs and live investor debates — every claim tied to a dated interview."
 metadata:
   perplexity:

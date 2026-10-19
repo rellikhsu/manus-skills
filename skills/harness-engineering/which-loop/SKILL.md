@@ -1,5 +1,5 @@
 ---
-name: which-loop
+name: "harness-engineering:which-loop"
 description: Use when composing a non-trivial task harness, especially when several available skills match or the user asks how installed skills fit the workflow.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: aws-lambda-microvms
+name: "aws:aws-lambda-microvms"
 description: >
   Build, run, debug, and operate applications on AWS Lambda MicroVMs —
   Firecracker-isolated, snapshot-resumable serverless compute environments that
