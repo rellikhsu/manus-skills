@@ -1,5 +1,5 @@
 ---
-name: ipo-filings-analysis
+name: "perplexity:ipo-filings-analysis"
 description: "Analyze S-1/F-1 IPO filings and amendments with investor-grade read-throughs of offering terms, dilution, growth quality, accounting, risks, governance, valuation, and diligence questions."
 metadata:
   perplexity:

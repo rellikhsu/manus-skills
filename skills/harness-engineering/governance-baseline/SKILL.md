@@ -1,5 +1,5 @@
 ---
-name: governance-baseline
+name: "harness-engineering:governance-baseline"
 description: Audit what an autonomous coding agent can do unchecked in this project — merge, deploy, spend, touch secrets, run destructive commands — then add the smallest permission boundary, audit trail, or human-approval gate that closes the highest-risk gap. Use when an agent is being given broader autonomy (auto-merge, autonomous PR loops, production access, credentials, unattended scheduled runs), when the user asks to "lock down" or "add guardrails" to agent actions, when reviewing what an agent is allowed to do unsupervised, or when an incident review shows an agent took an action nobody explicitly authorized.
 metadata:
   short-description: "Audit unchecked agent actions and add the smallest permission, audit, or human-approval boundary for the highest risk."

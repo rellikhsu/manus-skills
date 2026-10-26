@@ -1,5 +1,5 @@
 ---
-name: execution-plan
+name: "harness-engineering:execution-plan"
 description: Create and maintain durable, repo-checked-in execution plan files for non-trivial multi-step work. Use before starting a multi-step implementation, when the user says "write an exec plan" / "make a plan file" / "track this across sessions", when work will span context resets, sessions, or hand-offs to another agent, or when resuming work that already has a plan file under docs/exec-plans/. Also use to log decisions mid-task, mark a plan complete, or record follow-up tech debt.
 metadata:
   short-description: "Create durable repo-checked-in plans for multi-step work, cross-session tracking, decisions, and follow-up debt."
