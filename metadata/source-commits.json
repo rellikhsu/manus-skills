@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-26T02:49:51Z",
+  "updated_at": "2026-11-02T03:58:04Z",
   "sources": {
     "mattpocock/skills": {
       "repository": "https://github.com/mattpocock/skills.git",
-      "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2"
+      "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d"
     },
     "awslabs/agent-plugins": {
       "repository": "https://github.com/awslabs/agent-plugins.git",
@@ -15,7 +15,7 @@
     },
     "rellikhsu/harness-engineering": {
       "repository": "https://github.com/rellikhsu/harness-engineering.git",
-      "commit": "4f1426c94b765a2051d1b3993d19f7c8a25b8014"
+      "commit": "e00844e959c62675e14f8310a4b2f9eefb135bd6"
     }
   }
 }

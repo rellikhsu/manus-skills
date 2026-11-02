@@ -1,6 +1,6 @@
 ---
 name: repo-map-audit
-description: Audit a bloated CLAUDE.md / AGENTS.md / .cursorrules and split it into a small table-of-contents entry point plus a structured docs/ knowledge base. Use when the user says the instruction file is too long or bloated, asks to audit / review / clean up / trim / reorganize CLAUDE.md or AGENTS.md, wants to split agent docs into a docs/ directory, complains that agent instructions are stale or ignored, asks how to structure repo docs for agents or set up progressive disclosure, or when you notice the root instruction file exceeds ~150 lines while working on something else.
+description: Split a bloated CLAUDE.md/AGENTS.md into a ~100-line map, a docs/ knowledge base, and ARCHITECTURE.md. Use when agent instructions are too long, stale, or ignored, or to structure repo docs.
 metadata:
   short-description: "Split bloated agent instructions into a small repository map and a structured docs knowledge base."
 ---
@@ -9,124 +9,93 @@ metadata:
 
 Turn an "encyclopedia" instruction file into a **map**.
 
-Principle (as argued in OpenAI's writing on harness engineering): context is
-scarce. A giant instruction file crowds out the task, the code, and the docs. When
-everything is important, nothing is. Monolithic manuals rot and cannot be
-checked mechanically. So the root instruction file is the **table of contents**
-(~100 lines), and `docs/` is the **system of record**. Agents start small and
-are taught where to look next: progressive disclosure.
+Principle (from OpenAI's writing on harness engineering): the root instruction file is the **table of contents**
+(~100 lines), and `docs/` is the **system of record**.
 
-Never delete content during this skill. Content is moved, and every moved
-section leaves a pointer behind.
+Never delete content without user approval. Move content, and leave a pointer
+where each section used to be. Proposed deletions (Step 2) wait for approval.
 
 ## Step 1 — Locate and measure
 
-Find the root instruction file(s). Check, in order:
+Find the root instruction file(s). Check in this order:
 `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, `.github/copilot-instructions.md`,
-`CONVENTIONS.md`. Also glob for nested `**/CLAUDE.md` / `**/AGENTS.md` —
-nested files are usually fine and should be left alone unless also bloated.
+`CONVENTIONS.md`. Also search for nested `**/CLAUDE.md` / `**/AGENTS.md`.
 
-Measure and report a table:
+Measure and report this table:
 
 | Metric | How |
 |---|---|
 | Total lines / words | `wc -lw <file>` |
-| Section count | count of `^#{1,3} ` headings |
-| Lines per section | note any section > 40 lines |
 | Last modified | `git log -1 --format=%ai -- <file>` |
 | Code churn since | `git log --oneline --since=<that date> -- . ':!*.md' \| wc -l` |
-| Contributors | `git log --format=%an -- <file> \| sort -u \| wc -l` |
 
-The churn number is the rot signal: hundreds of code commits since the last
-instruction-file edit means the guidance is describing a repo that no longer
-exists.
+## Step 2 — Diagnose the problems
 
-If git is unavailable, skip those rows — do not guess.
+Read the whole file. Put **every** section into exactly one bucket and tag its
+problems. Report each finding with line ranges, evidence, and a proposed
+destination.
 
-## Step 2 — Diagnose the failure modes
+< 100 lines: stop if healthy, unless a 10k–200k-line open-source repo lacks `ARCHITECTURE.md` (matklad: propose one).
 
-Read the whole file. Classify **every** section into exactly one bucket and
-tag the problems you find. Report findings with line ranges, evidence, and a
-proposed destination — no vague "this could be better".
+Flag these symptoms:
 
-Size thresholds (rules of thumb, not laws):
-- < 100 lines: healthy. Say so and stop unless other symptoms are present.
-- 100–150: watch.
-- 150–250: suspect — audit properly.
-- \> 250: almost certainly an encyclopedia.
-
-Symptoms to flag explicitly:
-
-1. **Generic boilerplate.** Rules that would be true in any repo ("write
-   clean code", "add tests", "use meaningful variable names", generic language
-   idioms the model already knows). These are pure context tax → **delete**
-   (proposed, with user approval), not migrate.
-2. **Stale rot.** Rules referencing files, dirs, scripts, commands, services,
-   or deps that no longer exist. Verify mechanically: extract every path-like
-   and command-like token and test it (`test -e`, grep in `package.json` /
-   `Makefile` / `pyproject.toml` / lockfiles). Report each dead reference with
-   the exact line.
-3. **Mixed concerns.** One file jamming together architecture, code style,
-   build/test commands, business/product context, security rules, historical
-   one-offs, and in-progress plans. Each of those is a different audience and
-   a different update cadence — that mixture is the reason it rots.
-4. **Historical one-offs.** "In March we migrated X, so don't do Y" — a
-   changelog note masquerading as a standing rule. Belongs in a decision log.
-5. **Duplication.** Content already in `README.md`, a linter config, a
-   `Makefile`, or CI. Prefer the executable source of truth and point at it.
-6. **Unverifiable / soft rules.** "Be careful with the auth module." Either
-   make it specific and actionable, or drop it.
-7. **Buried critical rules.** A genuinely load-bearing constraint ("never run
-   migrations against prod") on line 190 is effectively invisible. These get
-   promoted into the trimmed map.
+1. **Stale rot.** Rules that mention files, dirs, scripts, commands, services,
+   or deps that no longer exist. Check with tools: extract every token that
+   looks like a path or command and test it (`test -e`, grep in `package.json` /
+   `Makefile` / `pyproject.toml` / lockfiles).
+2. **Mixed concerns.** One file mixes architecture, code style, build/test
+   commands, business/product context, security rules, past one-off notes, and
+   plans in progress.
+3. **Historical one-offs.** "In March we migrated X, so don't do Y" is a
+   changelog note posing as a standing rule. It belongs in a decision log.
+4. **Buried critical rules.** A truly important constraint ("never run
+   migrations against prod") on line 190 is effectively invisible. Promote
+   these into the trimmed map.
 
 ## Step 3 — Propose the target structure
 
-Design the layout from what **this** repo actually has. Do not scaffold empty
-files for concerns the project does not have — an empty doc is worse than no
-doc. Start from this menu and cut it down:
+Do not create empty
+files for concerns the project does not have. Start from this menu and remove what does not apply:
 
 ```
 CLAUDE.md              # ~100 lines: the map. Loaded every session.
-ARCHITECTURE.md        # system shape, boundaries, data flow (root: high traffic)
+ARCHITECTURE.md        # top-level map (OpenAI)
 docs/
   design-docs/
-    index.md           # index of design docs, one line + validation status each
-    core-beliefs.md    # agent-first operating principles (e.g. prefer deps the agent can reason about in-repo)
+    index.md           # index of design docs, with verification status
+    core-beliefs.md    # agent-first operating principles
   exec-plans/
     active/            # in-flight work, one file per effort
-    completed/         # archive; where finished plans go to stop rotting
+    completed/         # archive; where finished plans go
     tech-debt-tracker.md
   product-specs/
     index.md
   references/          # vendored external docs, *-llms.txt files
-  generated/           # machine-generated; db-schema.md, api surface, CLI help
+  generated/           # db-schema.md, api surface, CLI help
   quality-score.md     # per-area / per-layer grades, tracked over time
 ```
 
-Common project-specific additions: `docs/testing.md`, `docs/deployment.md`,
-`docs/security.md`, `docs/frontend.md`, `docs/data-model.md`,
-`docs/decisions/NNNN-*.md` (ADRs), `docs/glossary.md`.
+Common project-specific additions: `docs/deployment.md`,
+`docs/security.md`, `docs/decisions/NNNN-*.md` (ADRs).
 
 Rules for the structure:
-- An architecture map explains actual module responsibilities, allowed/forbidden
-  dependencies, state/data ownership, IO/validation boundaries, deliberate
-  absences, and the tests that support those claims. Verify against code; a valid
-  path or directory tree alone does not establish these properties. Log missing
-  or uncertain content separately rather than inventing it during a verbatim move.
-- After the module map, document relevant cross-cutting concerns in a separate
-  section: error handling, cancellation, authorization, observability, and other
-  policies spanning modules. State ownership and evidence; omit inapplicable
-  topics rather than copying another project's architecture. This follows
-  [matklad's ARCHITECTURE.md guidance](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html)
-  and the [rust-analyzer example](https://github.com/rust-lang/rust-analyzer/blob/d7c99931d05e3723d878bea5dc26766791fa4e69/docs/dev/architecture.md#cross-cutting-concerns).
-- `docs/generated/` is written by a script and never hand-edited. Say so at
-  the top of each generated file.
-- `docs/exec-plans/active/` is the only place with expected high churn; moving
-  finished plans to `completed/` is what keeps the rest stable.
-- Every directory containing more than ~3 docs gets an `index.md`.
+- `ARCHITECTURE.md` follows [matklad](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html):
+  short; "only specify things that are unlikely to frequently change. Don't try
+  to keep it synchronized with code. Instead, revisit it a couple of times a year."
+  - First a bird's eye overview of the problem, then a codemap of coarse modules
+    and how they relate. It answers "where's the thing that does X?" and "what does
+    the thing that I am looking at do?"
+  - Name key files, modules, and types for symbol search; do not link them.
+    Convert links after the verbatim move, not during it.
+  - Point out invariants (including absent dependencies) and layer/system boundaries; [rust-analyzer](https://github.com/rust-lang/rust-analyzer/blob/d7c99931d05e3723d878bea5dc26766791fa4e69/docs/dev/architecture.md) marks "Architecture Invariant" and "API Boundaries".
+  - Cover relevant cross-cutting concerns: rust-analyzer lists code generation, cancellation, testing, error handling, and observability.
+  - Check claims against the code. During a verbatim move, list missing or
+    uncertain content separately; do not invent it. Per matklad, module details
+    go in inline docs (better) or separate docs (here: `docs/`).
+- A script writes `docs/generated/`; never edit it by hand. State this at the
+  top of each generated file.
 
-Present as a mapping table before writing anything:
+Show a mapping table before writing anything:
 
 | Current lines | Section | Verdict | Destination |
 |---|---|---|---|
@@ -135,26 +104,23 @@ Present as a mapping table before writing anything:
 | 97–140 | Deploy runbook | move | `docs/deployment.md` |
 | 141–152 | "Never touch prod DB" | promote | `CLAUDE.md` (map body) |
 
-Then **stop and get explicit approval.** Show the proposed trimmed
-instruction file in full — it is short — so the user can react to the real
-artifact, not a plan.
+Then **stop and get explicit approval.** Show the full proposed trimmed
+instruction file (it is short) so the user reacts to the real file, not a plan.
 
 ## Step 4 — Execute the split
 
-Only after approval.
-
-1. Confirm a clean working tree (`git status --porcelain`); if dirty, ask
-   before proceeding. Do the whole split in one commit so it is trivially
-   revertible.
+1. Check that the working tree is clean (`git status --porcelain`); if not, ask
+   before continuing. Do the whole split in one commit.
 2. Create each `docs/` file by **moving text verbatim**. Do not rewrite,
-   summarize, or "improve" prose during the move — a move that also edits is
-   unreviewable. Add only a one-line H1 and a one-sentence purpose header.
-3. Rewrite the entry file to the map shape below.
+   summarize, or "improve" text during the move; a move that also edits cannot
+   be reviewed. Add only a one-line H1 and a one-sentence purpose line.
+3. Rewrite the entry file into the map shape below.
 4. Fix inbound links: grep the repo for references to the old headings/anchors
-   (`grep -rn "CLAUDE.md#" .`) and repoint them.
-5. Verify: every link in the new entry file resolves; entry-file length meets the
-   agreed project budget (suggested target ~100, default check limit 120); no content vanished
-   (`git show --stat`, and diff word counts old vs. sum of new).
+   (`grep -rn "CLAUDE.md#" .`) and point them to the new place.
+5. Verify: every link in the new entry file resolves; the entry file fits the
+   agreed project budget; no
+   content was lost (`git show --stat`, and compare the old word count with the
+   sum of the new files).
 
 ### Target shape of the trimmed entry file
 
@@ -179,30 +145,28 @@ Only after approval.
 ## Non-negotiables
 - Never run migrations against prod; use `make migrate-staging`.
 - All new endpoints require an auth decorator; see `docs/security.md`.
-- <5 max. If it's not load-bearing, it goes in docs/.>
+- <If it's not load-bearing, it goes in docs/.>
 
 ## Conventions
 Style is enforced by `ruff` + `prettier` — read the configs, not prose.
 Deeper conventions → `docs/design-docs/index.md`.
 ```
 
-Constraints on the map:
+Rules for the map (`ARCHITECTURE.md` names files instead of linking them):
 - Every pointer is a real relative path that resolves.
-- Say *when* to read something, not just that it exists ("before adding an
-  endpoint, read X") — that is what makes disclosure progressive.
-- No rule the tooling already enforces.
+- Say *when* to read something, not only that it exists ("before adding an
+  endpoint, read X").
 - Target ~100 lines; the example check defaults to 120 through `MAX_LINES`.
-  Agree a different budget when the project's map remains effective, and record
-  it in the actual check configuration. Size is a diagnostic, not proof of quality;
-  do not force a split of a healthy map to meet this example's default.
+  If the project's map still works well at another size, agree on that budget
+  and record it in the real check configuration. Size is a signal, not proof of
+  quality; do not split a healthy map just to meet this example's default.
 
 ## Step 5 — Propose lightweight freshness checks
 
-Do not skip this — unchecked docs rot back into an encyclopedia. Keep it
-small: one script, optionally one CI step. Offer it; do not install it
-unasked, and never add a heavyweight CI system.
+Do not skip this. Offer it; do not install it unless
+asked, and never add a heavy CI system (local policy; OpenAI uses CI).
 
-Write `scripts/check-docs.sh` (adapt to the repo's language/tooling):
+Write `scripts/check-docs.sh` (adapt it to the repo's language and tools):
 
 ```bash
 #!/usr/bin/env bash
@@ -227,7 +191,7 @@ else
   fi
 fi
 
-# 2. Every relative markdown link resolves.
+# 2. Check relative `](path)`.
 # Note: no pipeline around the inner loop, so `fail` is set in this shell.
 while IFS= read -r f; do
   while read -r link; do
@@ -246,52 +210,18 @@ while IFS= read -r f; do
   age=$(( (now - last) / 86400 ))
   [ "$age" -gt "$STALE_DAYS" ] || continue
   [ "$churn" -gt 0 ] && echo "WARN: $f unchanged ${age}d while code moved ($churn commits)"
-done < <(git ls-files 'docs/*.md' "$ENTRY")
+done < <(git ls-files 'docs/*.md' "$ENTRY" ARCHITECTURE.md)
 
 exit $fail
 ```
 
-Notes to convey to the user:
-- Link resolution and the size cap are **errors**; staleness is a **warning**
-  (it needs human judgement — some docs are correctly stable).
-- Wire it in via whatever already exists: a `make check` target, a
-  `pre-commit` hook, or one CI step. If none exists, leave it as a script the
-  user can run manually rather than introducing CI.
-- Tune `STALE_DAYS`; 180 is a starting point.
-- Optional extra: a `docs/generated/` regeneration check that fails if the
-  generator output differs from the committed file.
-
-## Worked example
-
-**Before** — `CLAUDE.md`, 412 lines, last edited 8 months ago, 340 code
-commits since. Sections: project intro (6), architecture (74), Python style
-(61), React style (48), test commands (9), deploy runbook (52), "Q2 billing
-migration notes" (39), API endpoint catalog (94), misc gotchas (29).
-
-**Audit output:** Python/React style sections duplicate `ruff.toml` and
-`.eslintrc` → delete, point at configs. The endpoint catalog references 7
-routes deleted in the v3 refactor → regenerate instead of maintaining.
-Billing-migration notes are historical → decision log. Buried on line 388:
-"staging shares the prod Redis" — critical, invisible.
-
-**After:**
-```
-CLAUDE.md                        94 lines  (map + commands + 4 non-negotiables)
-ARCHITECTURE.md                  74
-docs/deployment.md               52
-docs/decisions/0001-billing-migration.md  39
-docs/generated/api-endpoints.md  auto-generated from the router
-docs/gotchas.md                  22  (7 stale items dropped)
-scripts/check-docs.sh            offered, user wired into `make check`
-```
-Per-session context cost: ~412 lines → ~94, with the rest reachable in one
-read when relevant.
+Tell the user:
+- Hook it into whatever already exists: a `make check` target, a `pre-commit`
+  hook, or one CI step. If none exists, leave it as a script the user runs by
+  hand.
+- Optional: a `docs/generated/` check that fails if the generator output
+  differs from the committed file.
 
 ## Anti-patterns
 
-- Rewriting prose while moving it — do the move first, edit later.
-- Creating the full directory tree from Step 3 in a 3-file project.
-- Splitting a 90-line file that is working fine. Report "healthy" and stop.
 - Replacing one giant file with a giant `docs/index.md`.
-- A map full of pointers to empty stubs.
-- Doing the split without approval.
