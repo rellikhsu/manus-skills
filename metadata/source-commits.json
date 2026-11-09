@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-02T03:58:04Z",
+  "updated_at": "2026-11-09T04:14:20Z",
   "sources": {
     "mattpocock/skills": {
       "repository": "https://github.com/mattpocock/skills.git",
@@ -11,11 +11,11 @@
     },
     "obra/superpowers": {
       "repository": "https://github.com/obra/superpowers.git",
-      "commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b"
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7"
     },
     "rellikhsu/harness-engineering": {
       "repository": "https://github.com/rellikhsu/harness-engineering.git",
-      "commit": "e00844e959c62675e14f8310a4b2f9eefb135bd6"
+      "commit": "f348c6e286009de7f056c2bf1c9889da5bed06de"
     }
   }
 }

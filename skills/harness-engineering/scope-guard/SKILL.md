@@ -54,3 +54,8 @@ The diff stays inside `Write` and `Log`; no Guard or `Read-only` file changed; n
 - Stop: blocks once when `git diff <Base>` plus untracked files leave `Write`/`Log`.
 
 Bash writes do not fire the PreToolUse file matcher; the Stop check catches them. In Codex, plugin hooks run only after the user trusts them in `/hooks`, and Codex has no PostToolUseFailure event.
+
+## Anti-patterns
+
+- Changing Guard tests to make an out-of-scope behavior change pass.
+- Routing a blocked write through Bash instead of resolving the scope boundary.
