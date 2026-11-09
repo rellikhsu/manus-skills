@@ -1,5 +1,5 @@
 ---
-name: observability-bridge
+name: "harness-engineering:observability-bridge"
 description: Let the agent query logs, UI, metrics, or a running app itself instead of asking a human. Use when debugging goes in circles, the agent asks you to check or paste output, or logs are noise.
 metadata:
   short-description: "Make human-only logs, metrics, browser state, or runtime signals directly queryable by the agent."

@@ -1,5 +1,5 @@
 ---
-name: management-kpi-credibility-tracker
+name: "perplexity:management-kpi-credibility-tracker"
 description: "Track management guidance, KPI commitments, milestones, and time-bound forward-looking statements against revisions and actual outcomes in an auditable XLSX."
 metadata:
   perplexity:

@@ -1,5 +1,5 @@
 ---
-name: invariant-linter
+name: "harness-engineering:invariant-linter"
 description: Turn checkable rules in CLAUDE.md/AGENTS.md into lints, structural tests, or CI checks whose errors explain the fix. Use when agents keep breaking a rule or a convention needs enforcing.
 metadata:
   short-description: "Turn objectively checkable prose rules into mechanical lints, structural tests, or CI checks."

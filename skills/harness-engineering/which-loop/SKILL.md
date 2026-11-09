@@ -1,5 +1,5 @@
 ---
-name: which-loop
+name: "harness-engineering:which-loop"
 description: Choose which installed skills to combine for a non-trivial task. Use at the start of multi-step work, when several skills could apply, or when asked how the installed skills fit together.
 ---
 

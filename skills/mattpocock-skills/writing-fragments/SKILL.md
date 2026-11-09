@@ -1,5 +1,5 @@
 ---
-name: writing-fragments
+name: "mattpocock-skills:writing-fragments"
 description: "Writing, explore: mine raw fragments, no structure yet."
 disable-model-invocation: true
 ---

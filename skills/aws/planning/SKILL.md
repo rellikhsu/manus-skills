@@ -1,5 +1,5 @@
 ---
-name: planning
+name: "aws:planning"
 description: Discovers user intent and generates a structured, step-by-step plan for model customization workflows. This skill must always be activated alongside any other skill when the user's request relates to model customization — including fine-tuning, training, building, customizing, reviewing data, or getting advice on approach, regardless of domain. Do not skip this skill even if the immediate ask is narrow (e.g., reviewing data format or a single workflow step), because planning discovers the full scope of work needed. Also activate when the user wants to resume, continue, or modify an existing plan.
 metadata:
   version: "2.0.0"

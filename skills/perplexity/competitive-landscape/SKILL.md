@@ -1,5 +1,5 @@
 ---
-name: competitive-landscape
+name: "perplexity:competitive-landscape"
 description: "Build an investor-grade analysis of market structure and company positioning, mapping peers, strategic groups, share shifts, moats, unit economics, and implications for growth, margins, and valuation."
 metadata:
   perplexity:

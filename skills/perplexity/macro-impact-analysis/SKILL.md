@@ -1,5 +1,5 @@
 ---
-name: macro-impact-analysis
+name: "perplexity:macro-impact-analysis"
 description: "Analyze how macro and geopolitical forces affect a company through quantified transmission channels, scenarios, historical episodes, and leading indicators."
 metadata:
   perplexity:

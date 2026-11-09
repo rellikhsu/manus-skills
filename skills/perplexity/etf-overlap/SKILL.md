@@ -1,5 +1,5 @@
 ---
-name: etf-overlap
+name: "perplexity:etf-overlap"
 description: "Compare ETF holdings and exposures to understand overlap, redundancy, and diversification."
 metadata:
   perplexity:

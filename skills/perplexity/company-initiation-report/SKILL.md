@@ -1,5 +1,5 @@
 ---
-name: company-initiation-report
+name: "perplexity:company-initiation-report"
 description: "Create a initiation report covering a public company’s business, outlook, valuation, risks, and debates."
 metadata:
   owners: [daniel-wang-pplx]

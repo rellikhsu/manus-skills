@@ -1,5 +1,5 @@
 ---
-name: hyperpod-slurm-debugger
+name: "aws:hyperpod-slurm-debugger"
 description: Diagnostic-only skill for Slurm scheduler and node-daemon issues on Amazon SageMaker HyperPod Slurm clusters. Scope mirrors the HyperPod troubleshooting guide. Invoke when the user reports a Slurm node stuck in down/drain, "Node unexpectedly rebooted" after auto-repair, slurmd not running, jobs stuck PENDING with REASON=Resources while sinfo shows idle nodes, jobs stuck COMPLETING after node replacement, GRES/GPU counts wrong, scontrol ping failing, slurmctld unresponsive, an Action:Reboot/Replace request that did not trigger HyperPod auto-recovery, or auto-resume not restarting a job. Also triggers on "drain before reboot", "diagnose a Slurm node", "investigate stuck jobs."
 metadata:
   version: "0.0.1"

@@ -1,5 +1,5 @@
 ---
-name: aws-transform
+name: "aws:aws-transform"
 description: Migrate, modernize, and upgrade codebases to AWS. Run analysis on repos for tech debt, security vulnerabilities, and modernization opportunities. Transforms .NET Framework to .NET 8/10, mainframe COBOL to Java, VMware VMs to EC2, SQL Server to Aurora, and upgrades Java/Python/Node.js versions and AWS SDKs. Use when the user says "migrate .NET to AWS", "upgrade Java to 17/21", "modernize COBOL", "modernize mainframe", "move VMware to EC2", "convert SQL Server to Aurora", "upgrade Python version", "migrate AWS SDK", "transform this codebase", "analyze for issues", "find tech debt", "what tech debt", "security vulnerabilities", "CVEs", "what's wrong with my code", "assess my repos", "where do I start", "find what's outdated", "analyze my repos", "AWS Transform - continuous modernization", "continuous modernization" or "continuous-modernization". Don't use for infrastructure provisioning, CI/CD pipelines, or general coding tasks.
 ---
 

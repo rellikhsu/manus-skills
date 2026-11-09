@@ -1,5 +1,5 @@
 ---
-name: finetuning-technique
+name: "aws:finetuning-technique"
 description: Selects a fine-tuning technique (SFT, DPO, RLVR, or RLAIF) for the user's use case and validates it against the selected model's available recipes. Use when the user has decided to finetune and needs to choose a technique, or when the technique needs to be validated against a model. Requires a base model to already be selected (via model-selection skill).
 metadata:
   version: "1.0.0"

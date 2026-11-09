@@ -1,5 +1,5 @@
 ---
-name: finetuning
+name: "aws:finetuning"
 description: Generates code that fine-tunes a base model using SageMaker serverless training jobs. Use when the user says "start training", "fine-tune my model", "I'm ready to train", or when the plan reaches the finetuning step. Supports SFT, DPO, RLVR, and RLAIF trainers, including RLVR Lambda reward function and RLAIF custom prompt creation.
 metadata:
   version: "1.0.0"

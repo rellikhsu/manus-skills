@@ -1,5 +1,5 @@
 ---
-name: market-map
+name: "perplexity:market-map"
 description: "Research an industry vertical, categorize companies by sub-segment, stage, and funding, and produce a visual market map."
 metadata:
   perplexity:

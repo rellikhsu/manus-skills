@@ -1,5 +1,5 @@
 ---
-name: model-evaluation
+name: "aws:model-evaluation"
 description: 'Generates python code that evaluates SageMaker models. Supports two evaluation types: LLM-as-Judge and Custom Scorer. Use when the user says "evaluate my model", "run a benchmark", "test model performance", "how did my model perform", "compare models", or other similar requests.'
 metadata:
   version: "3.0.0"

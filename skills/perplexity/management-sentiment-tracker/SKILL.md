@@ -1,5 +1,5 @@
 ---
-name: management-sentiment-tracker
+name: "perplexity:management-sentiment-tracker"
 description: "Track quote-backed shifts in management language across earnings transcripts, MD&A, and material risk-factor changes over time, then connect them to subsequent KPI and financial outcomes where feasible."
 metadata:
   perplexity:

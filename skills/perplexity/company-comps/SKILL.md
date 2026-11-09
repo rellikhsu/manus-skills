@@ -1,5 +1,5 @@
 ---
-name: company-comps
+name: "perplexity:company-comps"
 description: "Build a trading comps table with EV/Revenue, EV/EBITDA, P/E, growth rates, and margins for a company and its peer group."
 metadata:
   perplexity:

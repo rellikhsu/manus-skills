@@ -1,5 +1,5 @@
 ---
-name: peer-earnings-read-through
+name: "perplexity:peer-earnings-read-through"
 description: "Analyze recent peer earnings transcripts to isolate industry themes and translate them into target-company implications with confidence and transmission mechanisms."
 metadata:
   perplexity:

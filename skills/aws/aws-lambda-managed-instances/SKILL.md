@@ -1,5 +1,5 @@
 ---
-name: aws-lambda-managed-instances
+name: "aws:aws-lambda-managed-instances"
 description: >
   Evaluate, configure, and migrate workloads to AWS Lambda Managed Instances (LMI).
   Triggers on: Lambda Managed Instances, LMI, capacity provider, multi-concurrency Lambda,

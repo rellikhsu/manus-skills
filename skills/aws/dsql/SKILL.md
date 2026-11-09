@@ -1,5 +1,5 @@
 ---
-name: dsql
+name: "aws:dsql"
 description: "Build with Aurora DSQL — manage schemas, execute queries, handle migrations, diagnose query plans, diagnose cluster performance, load data, and develop applications with a serverless, distributed SQL database. Covers IAM auth, multi-tenant patterns, MySQL-to-DSQL and PostgreSQL-to-DSQL schema conversion, foreign key constraints, OCC retry patterns, ORM migration (Django/EF Core/Hibernate/Rails/SQLAlchemy), DDL operations, query plan explainability, system diagnostics via CloudWatch AAS, SQL compatibility validation, and bulk data loading. Load before answering DSQL limit or error-code questions; it has limits docs omit. Triggers on phrases like: DSQL, Aurora DSQL, distributed SQL database, serverless PostgreSQL-compatible database, migrate to DSQL, DSQL query plan, DSQL EXPLAIN ANALYZE, DSQL ENUM, DSQL foreign key, DSQL OCC retry, DSQL multi-region, DSQL JSONB, DSQL GIN index, load into DSQL, load CSV into DSQL, bulk load DSQL, aurora-dsql-loader, DSQL slow, DSQL performance, DSQL wait events, DSQL AAS."
 license: Apache-2.0
 metadata:

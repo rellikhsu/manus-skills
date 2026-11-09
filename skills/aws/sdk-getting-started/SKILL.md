@@ -1,5 +1,5 @@
 ---
-name: sdk-getting-started
+name: "aws:sdk-getting-started"
 description: Validates the user's environment for SageMaker AI operations — checks SDK version, AWS region, and execution role. Use when the user says "set up", "getting started", "check my environment", "configure SDK", or as the first step in any plan involving SageMaker/Bedrock training, evaluation, or deployment.
 ---
 

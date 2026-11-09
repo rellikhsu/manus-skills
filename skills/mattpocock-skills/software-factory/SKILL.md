@@ -1,5 +1,5 @@
 ---
-name: software-factory
+name: "mattpocock-skills:software-factory"
 description: Shared language for designing a software factory: the tasks it runs and the services it plugs into.
 disable-model-invocation: true
 ---

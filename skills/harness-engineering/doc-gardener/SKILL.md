@@ -1,5 +1,5 @@
 ---
-name: doc-gardener
+name: "harness-engineering:doc-gardener"
 description: Recurring small-batch cleanup of stale docs and drift from house rules. Use when docs feel out of date, code has drifted from conventions, or for a gardening or tech-debt pass.
 metadata:
   short-description: "Recurring small-batch cleanup for stale docs, house-rule drift, tech debt, and code-versus-doc checks."

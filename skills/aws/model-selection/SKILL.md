@@ -1,5 +1,5 @@
 ---
-name: model-selection
+name: "aws:model-selection"
 description: Selects a base model for the user's use case by querying SageMaker Hub. Use when the user asks which model to use, wants to select or change their base model, mentions a model name or family (e.g., "Llama", "Mistral", "Nova"), or wants to evaluate a base model — always activate even for known model names because the exact Hub model ID must be resolved. Queries available models, presents benchmarks and licenses, and confirms selection.
 metadata:
   version: "1.0.0"

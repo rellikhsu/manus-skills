@@ -1,5 +1,5 @@
 ---
-name: execution-plan
+name: "harness-engineering:execution-plan"
 description: Durable, repo-checked-in plan files for multi-step work. Use before a multi-step implementation, for work spanning sessions or hand-offs, or to resume a plan in docs/exec-plans/.
 metadata:
   short-description: "Create durable repo-checked-in plans for multi-step work, cross-session tracking, decisions, and follow-up debt."

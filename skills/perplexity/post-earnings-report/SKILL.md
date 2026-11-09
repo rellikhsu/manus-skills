@@ -1,5 +1,5 @@
 ---
-name: post-earnings-report
+name: "perplexity:post-earnings-report"
 description: "Generate a concise post-earnings memo or dashboard summarizing the quarter, guidance, stock reaction, and key investor debates."
 metadata:
   perplexity:

@@ -1,5 +1,5 @@
 ---
-name: company-initiation-report-private
+name: "perplexity:company-initiation-report-private"
 description: "Create an investor-ready private-company initiation deck covering funding, ownership, unit economics, revenue quality, runway, governance, scenarios, valuation, diligence gaps, and decision-relevant risks."
 metadata:
   owners: [daniel-wang-pplx]
