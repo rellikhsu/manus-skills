@@ -53,6 +53,12 @@ The diff stays inside `Write` and `Log`; no Guard or `Read-only` file changed; n
 - PostToolUseFailure: on the 2nd, 4th, 8th... identical failure in a session, injects the reminder above; without a contract it asks for one.
 - Stop: blocks once when `git diff <Base>` plus untracked files leave `Write`/`Log`.
 
+Codex `apply_patch` matches the `Edit`/`Write` aliases. The hook checks every
+Add/Update/Delete path and both sides of a Move in `tool_input.command`.
+With a contract, unreadable patch headers or a remote `Environment ID` are
+blocked because their paths cannot be checked against the local project.
+At Stop, `Read-only` takes precedence over `Write` and `Log`, as it does before edits.
+
 Bash writes do not fire the PreToolUse file matcher; the Stop check catches them. In Codex, plugin hooks run only after the user trusts them in `/hooks`, and Codex has no PostToolUseFailure event.
 
 ## Anti-patterns
