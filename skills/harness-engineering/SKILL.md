@@ -1,6 +1,6 @@
 ---
 name: harness-engineering
-description: Local-first practices for making coding agents reliable on long or autonomous tasks. Includes repo-map-audit, invariant-linter, execution-plan, generator-evaluator, and 6 other core loops.
+description: Local-first practices for making coding agents reliable on long or autonomous tasks, including repo-map-audit, invariant-linter, execution-plan, generator-evaluator, scope-guard, and self-harness.
 ---
 
 # Harness Engineering Collection
