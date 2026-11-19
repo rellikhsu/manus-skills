@@ -1,5 +1,5 @@
 ---
-name: repo-map-audit
+name: "harness-engineering:repo-map-audit"
 description: Split a bloated CLAUDE.md/AGENTS.md into a ~100-line map, a docs/ knowledge base, and ARCHITECTURE.md. Use when agent instructions are too long, stale, or ignored, or to structure repo docs.
 metadata:
   short-description: "Split bloated agent instructions into a small repository map and a structured docs knowledge base."

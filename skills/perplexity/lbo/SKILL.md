@@ -1,5 +1,5 @@
 ---
-name: lbo
+name: "perplexity:lbo"
 description: "Build a fully linked XLSX leveraged buyout model for public-to-private or private-company transactions with debt schedules, cash sweep, returns, sensitivities, covenants, and validation."
 metadata:
   perplexity:

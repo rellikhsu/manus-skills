@@ -1,5 +1,5 @@
 ---
-name: generator-evaluator
+name: "harness-engineering:generator-evaluator"
 description: Separate generator and evaluator agents iterate against a rubric. Use for subjective quality (UI/UX, design, polish) or when deciding if work is really done needs a judge other than its author.
 metadata:
   short-description: "Run an independent generator/evaluator rubric loop for subjective criteria not fully covered by objective checks, including mixed correctness/UX tasks."

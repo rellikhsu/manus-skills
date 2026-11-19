@@ -1,5 +1,5 @@
 ---
-name: governance-baseline
+name: "harness-engineering:governance-baseline"
 description: Audit what an agent can do unchecked (merge, deploy, spend, secrets, destructive commands) and add the smallest guardrail. Use before granting more autonomy or when asked for guardrails.
 metadata:
   short-description: "Audit unchecked agent actions and add the smallest permission, audit, or human-approval boundary for the highest risk."

@@ -1,5 +1,5 @@
 ---
-name: update-investment-thesis
+name: "perplexity:update-investment-thesis"
 description: "Update an existing investment thesis or memo by tracking dated developments against each thesis pillar, milestone, scenario, and falsifier."
 metadata:
   perplexity:

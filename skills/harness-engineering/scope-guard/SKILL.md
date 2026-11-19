@@ -1,5 +1,5 @@
 ---
-name: scope-guard
+name: "harness-engineering:scope-guard"
 description: Use before fixing a bug or failing test, when a fix spreads into tests, helpers or other modules, or when a scope-guard hook fires. Keeps the agent on task.
 ---
 

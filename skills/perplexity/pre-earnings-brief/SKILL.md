@@ -1,5 +1,5 @@
 ---
-name: pre-earnings-brief
+name: "perplexity:pre-earnings-brief"
 description: "Prepare for earnings with consensus estimates, key metrics, historical surprises, and reaction scenarios."
 metadata:
   perplexity:

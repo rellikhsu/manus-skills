@@ -1,5 +1,5 @@
 ---
-name: harness-retune
+name: "harness-engineering:harness-retune"
 description: Re-test agent scaffolding after a model upgrade, one piece at a time, and try what is newly possible. Use when a new model ships or a workflow feels over-engineered.
 metadata:
   short-description: "Re-evaluate harness scaffolding after a model upgrade and test what can be removed or newly attempted."

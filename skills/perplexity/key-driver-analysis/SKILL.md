@@ -1,5 +1,5 @@
 ---
-name: key-driver-analysis
+name: "perplexity:key-driver-analysis"
 description: "Identify which fundamentals, estimates, peers, macro factors, and guidance changes actually move a stock."
 metadata:
   perplexity:

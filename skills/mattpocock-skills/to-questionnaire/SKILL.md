@@ -1,5 +1,5 @@
 ---
-name: to-questionnaire
+name: "mattpocock-skills:to-questionnaire"
 description: Turn a decision you can't fully answer into a questionnaire for someone else to fill in.
 disable-model-invocation: true
 ---

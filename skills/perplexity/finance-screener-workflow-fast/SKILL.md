@@ -1,5 +1,5 @@
 ---
-name: finance-screener-workflow-fast
+name: "perplexity:finance-screener-workflow-fast"
 description: "Fast natural-language public-equity screening that mirrors perplexity.ai/finance/screener. DEFAULT fast mode compiles a typed screen spec into deterministic DuckDB SQL and runs it with exactly one bash call. OPT-IN deep mode batches and parallelizes finance_* enrichment across the top survivors. Use for 'find stocks that…', candidate-list generation, sector/market-cap/valuation/growth/income screens, and watchlist discovery. Not for single-ticker deep dives or personal portfolio holdings."
 metadata:
   perplexity:
