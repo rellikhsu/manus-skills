@@ -6,11 +6,17 @@ Run the deterministic conversion checks with:
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 ```
 
-The four tests execute the real transformer and validator in disposable
+The tests execute the real transformer and validator in disposable
 directories. They characterize existing behavior: child-only name changes,
 instruction-body and root preservation, repeated-run idempotence, and rejection
 of unprefixed or wrongly namespaced children. The converter implementation is
 unchanged by the collection-entry correction.
+
+They also lock in the two passes that exist only because Manus refuses an import
+over 100 files: pruning files Manus never reads, and splitting an oversized
+namespace into bundles that keep every child skill name and sibling link intact.
+An over-limit bundle, a stale import manifest, a skill missing from the bundle
+map, and a bundle name colliding with a skill name are all fatal.
 
 ## 2026-09-06 collection-entry micro-test
 

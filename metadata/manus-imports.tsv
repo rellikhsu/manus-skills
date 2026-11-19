@@ -1,6 +1,11 @@
-bundle_name	manus_github_import_url	upstream_repository
-mattpocock-skills	https://github.com/rellikhsu/manus-skills/tree/dist/skills/mattpocock-skills	https://github.com/mattpocock/skills
-aws-skills	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws	https://github.com/awslabs/agent-plugins
-superpowers	https://github.com/rellikhsu/manus-skills/tree/dist/skills/superpowers	https://github.com/obra/superpowers
-harness-engineering	https://github.com/rellikhsu/manus-skills/tree/dist/skills/harness-engineering	https://github.com/rellikhsu/harness-engineering
-perplexity	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity	https://www.perplexity.ai/computer/skills
+bundle_name	manus_github_import_url	upstream_repository	skill_count	file_count	import_status
+aws-ai-ml	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/ai-ml	https://github.com/awslabs/agent-plugins	11	76	ok
+aws-database	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/database	https://github.com/awslabs/agent-plugins	1	74	ok
+aws-hyperpod	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/hyperpod	https://github.com/awslabs/agent-plugins	8	39	ok
+aws-modernization	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/modernization	https://github.com/awslabs/agent-plugins	4	72	ok
+aws-serverless	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/serverless	https://github.com/awslabs/agent-plugins	7	79	ok
+aws-tooling	https://github.com/rellikhsu/manus-skills/tree/dist/skills/aws/tooling	https://github.com/awslabs/agent-plugins	3	43	ok
+harness-engineering	https://github.com/rellikhsu/manus-skills/tree/dist/skills/harness-engineering	https://github.com/rellikhsu/harness-engineering	11	12	ok
+mattpocock-skills	https://github.com/rellikhsu/manus-skills/tree/dist/skills/mattpocock-skills	https://github.com/mattpocock/skills	39	72	ok
+perplexity	https://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity	https://www.perplexity.ai/computer/skills	21	46	ok
+superpowers	https://github.com/rellikhsu/manus-skills/tree/dist/skills/superpowers	https://github.com/obra/superpowers	15	81	ok

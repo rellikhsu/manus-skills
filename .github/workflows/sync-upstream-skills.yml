@@ -40,6 +40,12 @@ jobs:
             test -n "$skill_url"
             test -n "$upstream_url"
           done < <(tail -n +2 metadata/skill-imports.tsv)
+      - name: Check the Manus 100-file import budget
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python3 scripts/bundle_layout.py
+          python3 scripts/bundle_layout.py --check
       - name: Commit clean mirror to main
         shell: bash
         run: |
@@ -83,4 +89,5 @@ jobs:
           echo "Verifying dist branch..."
           test "$(find skills -mindepth 3 -maxdepth 4 -type f -name SKILL.md | wc -l)" -gt 0
           python3 scripts/validate-dist.py
+          python3 scripts/bundle_layout.py --check
           git push origin dist --force

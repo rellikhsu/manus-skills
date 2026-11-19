@@ -2,3 +2,5 @@ namespace	skill_name	upstream_repository
 mattpocock-skills	<generated from mattpocock/skills>	https://github.com/mattpocock/skills
 aws	<generated from awslabs/agent-plugins>	https://github.com/awslabs/agent-plugins
 superpowers	<generated from obra/superpowers>	https://github.com/obra/superpowers
+harness-engineering	<generated from rellikhsu/harness-engineering>	https://github.com/rellikhsu/harness-engineering
+perplexity	<manually imported Perplexity Finance export>	https://www.perplexity.ai/computer/skills

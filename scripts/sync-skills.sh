@@ -136,13 +136,10 @@ write_import_metadata() {
   done < <(find "$ROOT_DIR/skills/perplexity" -mindepth 2 -maxdepth 2 -type f -name SKILL.md -print | sort)
 }
 write_manus_bundle_metadata() {
-  local metadata_file="$ROOT_DIR/metadata/manus-imports.tsv"
-  printf 'bundle_name\tmanus_github_import_url\tupstream_repository\n' > "$metadata_file"
-  printf 'mattpocock-skills\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/mattpocock-skills\thttps://github.com/mattpocock/skills\n' >> "$metadata_file"
-  printf 'aws-skills\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/aws\thttps://github.com/awslabs/agent-plugins\n' >> "$metadata_file"
-  printf 'superpowers\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/superpowers\thttps://github.com/obra/superpowers\n' >> "$metadata_file"
-  printf 'harness-engineering\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/harness-engineering\thttps://github.com/rellikhsu/harness-engineering\n' >> "$metadata_file"
-  printf 'perplexity\thttps://github.com/rellikhsu/manus-skills/tree/dist/skills/perplexity\thttps://www.perplexity.ai/computer/skills\n' >> "$metadata_file"
+  # The bundle layout, and therefore the Manus 100-file import limit, is owned by
+  # scripts/bundle_layout.py. Emitting the manifest from one module keeps main and
+  # dist describing the same importable bundles.
+  python3 "$ROOT_DIR/scripts/bundle_layout.py" --write
 }
 clone_source "$MATT_REPO" matt
 clone_source "$AWS_REPO" aws
