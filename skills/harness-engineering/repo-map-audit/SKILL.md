@@ -130,10 +130,10 @@ instruction file (it is short) so the user reacts to the real file, not a plan.
 <one paragraph: what this repo is, in two sentences>
 
 ## Start here
-- Architecture and boundaries → `ARCHITECTURE.md`
-- Why we build it this way → `docs/design-docs/core-beliefs.md`
-- What's in flight right now → `docs/exec-plans/active/`
-- DB schema (generated, do not edit) → `docs/generated/db-schema.md`
+- Architecture and boundaries → [ARCHITECTURE.md](ARCHITECTURE.md)
+- Why we build it this way → [docs/design-docs/core-beliefs.md](docs/design-docs/core-beliefs.md)
+- What's in flight right now → [docs/exec-plans/active/](docs/exec-plans/active/)
+- DB schema (generated, do not edit) → [docs/generated/db-schema.md](docs/generated/db-schema.md)
 
 ## Commands
 | Task | Command |
@@ -144,16 +144,16 @@ instruction file (it is short) so the user reacts to the real file, not a plan.
 
 ## Non-negotiables
 - Never run migrations against prod; use `make migrate-staging`.
-- All new endpoints require an auth decorator; see `docs/security.md`.
+- All new endpoints require an auth decorator; see [docs/security.md](docs/security.md).
 - <If it's not load-bearing, it goes in docs/.>
 
 ## Conventions
 Style is enforced by `ruff` + `prettier` — read the configs, not prose.
-Deeper conventions → `docs/design-docs/index.md`.
+Deeper conventions → [docs/design-docs/index.md](docs/design-docs/index.md).
 ```
 
 Rules for the map (`ARCHITECTURE.md` names files instead of linking them):
-- Every pointer is a real relative path that resolves.
+- Every pointer is a relative Markdown link that resolves.
 - Say *when* to read something, not only that it exists ("before adding an
   endpoint, read X").
 - Target ~100 lines; the example check defaults to 120 through `MAX_LINES`.

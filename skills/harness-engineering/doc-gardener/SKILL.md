@@ -18,7 +18,7 @@ Local policy: the caps and grades below, no automerge, and logging deletions. Ex
 ## Step 0 — Ensure golden principles exist
 
 Look for `docs/GOLDEN_PRINCIPLES.md` (also accept `GOLDEN_PRINCIPLES.md`,
-`.claude/golden-principles.md`, or a "Golden principles" section in `CLAUDE.md`).
+`.claude/golden-principles.md`, or a "Golden principles" section in `CLAUDE.md` or `AGENTS.md`).
 
 If none exists, create `docs/GOLDEN_PRINCIPLES.md` **before scanning**:
 
@@ -59,7 +59,7 @@ Quality grade: A = 0 violations, B = 1-3, C = 4+. Update `docs/quality-score.md`
 
 Check docs **against the code**. Never trust what the doc says about itself.
 
-For each README, `docs/*.md`, `CLAUDE.md`, and doc comment in scope:
+For each README, `CLAUDE.md`/`AGENTS.md`, `ARCHITECTURE.md`, `docs/*.md`, and doc comment in scope:
 - List every concrete claim: file paths, function/class/CLI names, env vars, commands,
   ports, package names, directory trees, architecture statements.
 - Check each one: does the path exist (`ls`), does the symbol exist (`grep`/`rg`), does the
@@ -124,7 +124,7 @@ Link external issues here.
 
 ## Step 7 — Report
 
-Short summary: files scanned, fixes committed (one line each), items logged, grade changes,
+If the repo tracks quality grades (e.g. `docs/quality-score.md` or a grade table in `GOLDEN_PRINCIPLES.md`), update them first. Then report a short summary: files scanned, fixes committed (one line each), items logged, grade changes,
 and any principle that keeps being violated. A principle that keeps being violated means the
 codebase should make the wrong thing hard (lint rule, type, wrapper). Propose that lint rule.
 

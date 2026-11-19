@@ -9,7 +9,7 @@ Source: OpenAI's [harness-engineering article](https://openai.com/index/harness-
 
 ## 1. Write the contract
 
-Before the first edit, write `.scope/contract.md` and add `.scope/` to `.git/info/exclude`:
+Before the first edit, write `.scope/contract.md` and add `.scope/` to `$(git rev-parse --git-path info/exclude)` (prefer a clean worktree; in a dirty worktree the hook snapshots pre-existing changes into `.scope/baseline.json` when `.scope/contract.md` is written, or run `python3 "${CLAUDE_PLUGIN_ROOT}/hooks/scope_guard.py" --baseline`):
 
 ```
 Goal:      the behavior of A that must change, one line
@@ -45,13 +45,13 @@ Put exploratory files outside the deliverable, in a scratch path. Paths outside 
 
 ## 5. Finish
 
-The diff stays inside `Write` and `Log`; no Guard or `Read-only` file changed; no new failure against Baseline; Target passes. Then delete `.scope/`.
+The diff stays inside `Write` and `Log`; no Guard or `Read-only` file changed; no new failure against Baseline; Target passes. Then create `.scope/done` (or run `python3 "${CLAUDE_PLUGIN_ROOT}/hooks/scope_guard.py" --finish`; on hosts without the plugin hooks, delete `.scope/` after confirming `git diff <Base>` and `git ls-files --others --exclude-standard` stay inside `Write`/`Log`) so the Stop check verifies the diff before removing `.scope/`.
 
 ## Hooks
 
 - PreToolUse on `Edit|Write|MultiEdit|NotebookEdit`: blocks writes outside `Write`/`Log`, to `Read-only`, or to the contract.
 - PostToolUseFailure: on the 2nd, 4th, 8th... identical failure in a session, injects the reminder above; without a contract it asks for one.
-- Stop: blocks once when `git diff <Base>` plus untracked files leave `Write`/`Log`.
+- Stop: blocks once when `git diff <Base>` plus new untracked files leave `Write`/`Log`; removes `.scope/` when `.scope/done` is present and the check passes.
 
 Codex `apply_patch` matches the `Edit`/`Write` aliases. The hook checks every
 Add/Update/Delete path and both sides of a Move in `tool_input.command`.
